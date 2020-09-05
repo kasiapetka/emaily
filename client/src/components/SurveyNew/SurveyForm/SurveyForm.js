@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {reduxForm, Field} from "redux-form";
 import SurveyField from "./SurveyField/SurveyField";
-import './SurveyForm.scss';
+import '../Survey.scss';
 import { RiCheckFill } from 'react-icons/ri'
 import {Link} from "react-router-dom";
 

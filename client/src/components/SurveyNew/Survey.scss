@@ -1,0 +1,28 @@
+.survey {
+  form {
+    margin-top: 5vw;
+    border: 1px dashed red;
+    padding: 20px;
+  }
+
+  .row {
+    padding: 0;
+  }
+
+  .buttons {
+    margin-top: 15px;
+  }
+
+  [type="radio"]:checked+span:after{
+    border: 2px solid #1a237e;
+    background-color: #1a237e;
+  }
+}
+
+@media (max-width: 426px) {
+  .survey {
+    form {
+      margin-top: 35vw;
+    }
+  }
+}
