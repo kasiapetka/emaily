@@ -4,8 +4,12 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from "redux";
-import reducers from './reducers';
+import reducers from './store/reducers';
 import reduxThunk from 'redux-thunk';
+import './styles/Flex.scss';
+import './styles/Element.scss';
+import './styles/Size.scss';
+import './styles/General.scss';
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 

@@ -1,14 +1,19 @@
-.landing {
+.dashboard {
   text-align: left;
 
   &_space {
     display: none;
   }
-
+  &_icon{
+    font-size: 2rem;
+  }
+  .fixed-action-btn{
+    z-index: 300;
+  }
 }
 
 @media (max-width: 426px) {
-  .landing {
+  .dashboard {
     text-align: center;
 
     &_space {

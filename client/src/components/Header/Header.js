@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import {RiUserReceived2Fill as Login, RiUserShared2Fill as Logout, RiMailStarFill as Logo} from "react-icons/ri";
 import {Link} from "react-router-dom";
 import './Header.scss';
-import '../styles/Flex.scss';
 
 class Header extends Component {
     renderContent() {
