@@ -7,6 +7,7 @@ import {Field, reduxForm} from "redux-form";
 class SurveyType extends Component {
 
     handleSubmit() {
+        this.props.handleSubmit(values => console.log(values));
         this.props.goToNextStep();
     }
 

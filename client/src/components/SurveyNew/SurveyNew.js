@@ -6,8 +6,6 @@ import SurveyType from "./SurveyType/SurveyType";
 
 class SurveyNew extends Component {
     renderStep(){
-
-        console.log(this.props.currentStep)
         switch(this.props.currentStep?.id){
             case 0:
                 return <SurveyType/>;
