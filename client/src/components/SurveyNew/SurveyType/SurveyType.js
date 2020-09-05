@@ -6,8 +6,8 @@ import {Field, reduxForm} from "redux-form";
 
 class SurveyType extends Component {
 
-    handleSubmit() {
-        this.props.handleSubmit(values => console.log(values));
+    handleSubmit(values) {
+        console.log(values)
         this.props.goToNextStep();
     }
 
@@ -17,20 +17,20 @@ class SurveyType extends Component {
                 <div className="container">
                     <div className="survey row">
                         <div className="col m8 s12">
-                            <form onSubmit={this.handleSubmit}>
+                            <form onSubmit={this.props.handleSubmit(values => this.handleSubmit(values))}>
                                 <div>
-                                    <label>Password</label>
+                                    <label>Do You want to set password for Your survey?</label>
                                     <div>
                                         <p>
                                             <label>
                                                 <Field name="password" component="input" type="radio" value="true"/>
-                                                <span>Password</span>
+                                                <span>Yes, set password</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <Field name="password" component="input" type="radio" value="false"/>
-                                                <span>No Password</span>
+                                                <span>No, skip password</span>
                                             </label>
                                         </p>
                                     </div>
