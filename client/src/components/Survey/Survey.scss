@@ -31,10 +31,24 @@
   }
 }
 
+.questions{
+  button{
+    margin-bottom: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  margin-top: 5vw;
+  border: 1px dashed #b71c1c;
+  background-color: white;
+}
+
 @media (max-width: 426px) {
   .survey {
     form {
       margin-top: 35vw;
     }
+  }
+  .questions{
+    margin-top: 35vw;
   }
 }

@@ -9,7 +9,6 @@ const INPUTS = [
     {name: 'title', label: 'Survey Title'},
     {name: 'subject', label: 'Subject'},
     {name: 'body', label: 'Email Body'},
-    {name: 'emails', label: 'Recipient List'}
 ];
 
 class SurveyFormSecondPage extends Component {
@@ -53,5 +52,5 @@ export default reduxForm({
     form: 'surveyForm',
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
-    validate
+    //validate
 })(SurveyFormSecondPage);

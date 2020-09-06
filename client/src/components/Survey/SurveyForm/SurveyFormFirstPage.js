@@ -106,5 +106,5 @@ export default reduxForm({
     form: 'surveyForm',
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
-    validate
+   // validate
 })(SurveyFormFirstPage);
