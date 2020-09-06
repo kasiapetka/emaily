@@ -4,9 +4,9 @@ import Header from './Header/Header';
 import Landing from "./Landing/Landing";
 import ErrorMessage from './ErrorMessage';
 import Dashboard from "./Dashboard/Dashboard";
-import SurveyNew from "./SurveyNew/SurveyNew";
 import {connect} from "react-redux";
 import * as actions from '../store/actions';
+import SurveyForm from "./Survey/SurveyForm/SurveyForm";
 
 class App extends Component {
 
@@ -23,7 +23,7 @@ class App extends Component {
                         <Switch>
                             <Route path='/' exact component={Landing}/>
                             <Route path='/surveys' exact component={Dashboard}/>
-                            <Route path='/surveys/new' component={SurveyNew}/>
+                            <Route path='/surveys/new' component={SurveyForm}/>
                             <Route path='/' component={ErrorMessage}/>
                         </Switch>
                     </div>

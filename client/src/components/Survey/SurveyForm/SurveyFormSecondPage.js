@@ -3,7 +3,7 @@ import {reduxForm, Field} from "redux-form";
 import SurveyField from "./SurveyField/SurveyField";
 import '../Survey.scss';
 import { RiCheckFill } from 'react-icons/ri'
-import {Link} from "react-router-dom";
+import validate from './validate'
 
 const INPUTS = [
     {name: 'title', label: 'Survey Title'},
@@ -12,7 +12,7 @@ const INPUTS = [
     {name: 'emails', label: 'Recipient List'}
 ];
 
-class SurveyForm extends Component {
+class SurveyFormSecondPage extends Component {
 
     renderFields() {
         return (
@@ -34,10 +34,10 @@ class SurveyForm extends Component {
                 <div className="container">
                     <div className="survey row">
                         <div className="col m8 s12">
-                            <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+                            <form onSubmit={this.props.handleSubmit(() => this.props.onSubmit())}>
                                 {this.renderFields()}
                                 <div className="flex flex-justify-between buttons">
-                                    <Link to="/surveys" className="btn large red darken-4">Cancel</Link>
+                                    <button onClick={this.props.previousPage} className="btn large red darken-4">Back</button>
                                     <button type="submit" className="btn large indigo darken-4">Next <RiCheckFill/></button>
                                 </div>
                             </form>
@@ -50,5 +50,8 @@ class SurveyForm extends Component {
 }
 
 export default reduxForm({
-    form: 'surveyForm'
-})(SurveyForm);
+    form: 'surveyForm',
+    destroyOnUnmount: false,
+    forceUnregisterOnUnmount: true,
+    validate
+})(SurveyFormSecondPage);

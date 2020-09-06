@@ -1,7 +1,11 @@
 .survey {
+  label {
+    font-size: 1.2rem;
+  }
+
   form {
     margin-top: 5vw;
-    border: 1px dashed red;
+    border: 1px dashed #b71c1c;
     padding: 20px;
   }
 
@@ -13,9 +17,17 @@
     margin-top: 15px;
   }
 
-  [type="radio"]:checked+span:after{
+  [type="radio"]:checked+span:after, [type="checkbox"].filled-in:checked+span:not(.lever):after {
     border: 2px solid #1a237e;
     background-color: #1a237e;
+  }
+
+  &-field{
+    .error{
+      color: #b71c1c;
+      padding: 10px;
+      font-size: 1rem;
+    }
   }
 }
 
