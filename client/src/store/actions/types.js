@@ -6,3 +6,5 @@ export const GO_TO_PREV_PAGE='GO_TO_PREV_PAGE';
 
 export const UPDATE_SURVEY='UPDATE_SURVEY';
 
+export const ADD_QUESTION='ADD_QUESTION';
+

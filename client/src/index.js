@@ -10,6 +10,7 @@ import './styles/Flex.scss';
 import './styles/Element.scss';
 import './styles/Size.scss';
 import './styles/General.scss';
+import './styles/Input.scss';
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 

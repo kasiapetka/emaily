@@ -7,8 +7,9 @@ import * as actions from "../../../store/actions";
 
 class SurveyForm extends Component {
     onSubmit=(values)=>{
-        console.log(values)
-    }
+    console.log(values)
+        console.log(this.props.questions)
+    };
 
     renderStep(){
         switch(this.props.currentPage?.id){
@@ -34,9 +35,10 @@ class SurveyForm extends Component {
     }
 }
 
-function mapStateToProps({survey}) {
+function mapStateToProps({survey, question}) {
     return {
-        currentPage: survey.currentPage
+        currentPage: survey.currentPage,
+        questions: question.questions
     };
 }
 

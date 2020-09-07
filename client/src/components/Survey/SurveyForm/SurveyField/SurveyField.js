@@ -1,13 +1,11 @@
 import React from "react";
 
-export default ({ input, label, placeholder, type, meta: { touched, error } }) =>{
+export default ({ input, label, placeholder, disabled, type, meta: { touched, error } }) =>{
     return(
         <div className="survey-field">
             <label>{label}</label>
-            <div>
-                <input {...input} placeholder={placeholder} type={type} />
+                <input {...input} placeholder={placeholder} disabled={disabled} type={type}/>
                 {touched && error && <span className="error">{error}</span>}
-            </div>
         </div>
     );
 }
