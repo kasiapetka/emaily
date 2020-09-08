@@ -1,22 +1,22 @@
-import React, {Component} from 'react';
-import {Field, reduxForm} from "redux-form";
+import React from 'react';
+import {Field} from "redux-form";
 import SurveyField from "../SurveyForm/SurveyField/SurveyField";
+import QuestionAbcSingle from "./QuestionABCSingle";
 
-class QuestionOpen extends Component {
-    render() {
+const QuestionOpen =({index, removeQuestion})=> {
         return (
-            <div className="row" style={{borderBottom: '1px solid aquamarine', padding: '20px 10px'}}>
+            <div className="row" style={{borderBottom: '1px solid #ffd740', padding: '20px 10px'}}>
                 <div className="col s1"></div>
                 <div className="col s10">
-                    <p>{this.props.index+1} Question</p>
+                    <p>{index+1} Question Open</p>
 
                     <Field
-                        name={'questions['+this.props.index+'].question'}
+                        name={'questions['+index+'].question'}
                         type="text"
                         component={SurveyField}
                     />
                     <Field type="text"
-                           name={'questions['+this.props.index+'].answer'}
+                           name={'questions['+index+'].answers'}
                            disabled={true}
                            placeholder="Space for an answer"
                            component={SurveyField}/>
@@ -24,7 +24,7 @@ class QuestionOpen extends Component {
             </div>
 
         );
-    }
-}
+};
 
 export default QuestionOpen;
+//<button onClick={()=>removeQuestion(index)}>X</button>
