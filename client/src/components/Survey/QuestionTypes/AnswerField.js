@@ -10,14 +10,13 @@ const AnswerField =({index, questionIndex, answer})=> {
                     <p className="col s1">{questionIndex+1}.{index+1})</p>
                     <div className="col s11">
                         <Field type="text"
-                               name={'questions['+questionIndex+'].answers['+index+'].answer'}
+                               name={answer}
                                component={SurveyField}/>
                     </div>
                 </div>
 
             </div>
         </div>
-
     );
 };
 
