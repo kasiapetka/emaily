@@ -24,6 +24,7 @@ class SurveyFormThirdPage extends Component {
                 {
                     QUESTION_TYPES.map(({label, id, name}) =>
                         <button key={id}
+                                type="button"
                                 onClick={() => fields.push({id: id})}
                                 className="waves-effect waves-light btn amber darken-1">
                             <h6>{label}</h6>
@@ -39,7 +40,6 @@ class SurveyFormThirdPage extends Component {
 
     renderQuestions = ({fields, meta: {error, submitFailed}}) => {
         return (
-
             <div className="flex">
                 <div className="col m8 s12 survey-form">
                     {
@@ -87,7 +87,7 @@ class SurveyFormThirdPage extends Component {
             <div className="bg bg-secondary">
                 <div className="container">
                     <div className="survey row">
-                        <form onSubmit={this.props.handleSubmit((values) => this.props.onSubmit(values))}>
+                        <form onSubmit={this.props.handleSubmit(() => this.props.onSubmit())}>
                             <FieldArray name="questions" component={this.renderQuestions}/>
                             <div className="flex flex-justify-between buttons">
                                 <button onClick={this.props.previousPage} className="btn large red darken-4">Back

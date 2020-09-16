@@ -3,7 +3,9 @@ import { GO_TO_NEXT_PAGE, UPDATE_SURVEY, GO_TO_PREV_PAGE } from "../actions/type
 const PAGES =  [
     {id: 0, name:'type'},
     {id: 1, name:'content'},
-    {id: 2, name:'summary'}
+    {id: 2, name:'questions'},
+    {id: 3, name:'summary'}
+
 ];
 
 const initialState = {

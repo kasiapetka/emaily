@@ -5,8 +5,8 @@ import QuestionABC from "./QuestionABC";
 
 const QuestionOpen =({index, removeQuestion,fields, question})=> {
         return (
-            <div className="row" style={{borderBottom: '1px solid #ffd740', padding: '20px 10px'}}>
-                <div className="col s1"><button className="flex flex-middle btn btn-small red darken-4"
+            <div className="row question">
+                <div className="col s1"><button type="button" className="flex flex-middle btn btn-small red darken-4"
                                                 style={{height:'25px', padding:'0 10px'}}
                     onClick={()=>removeQuestion(index,fields)}>X</button></div>
                 <div className="col s10">

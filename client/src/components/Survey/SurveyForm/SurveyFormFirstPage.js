@@ -63,17 +63,17 @@ class SurveyFormFirstPage extends Component {
                                     </p>
                                     <Field name="password" component={renderError}/>
                                 </div>
-                                <div>
-                                    <label>Do You want to specify the recipients?</label>
-                                    <p>
-                                        <label>
-                                            <Field className="filled-in" name="specifyRecipients" component="input"
-                                                   type="checkbox"
-                                                   value={this.props.values?.specifyRecipients} checked={this.props.values?.specifyRecipients ? this.props.values?.specifyRecipients : false }/>
-                                            <span>Yes</span>
-                                        </label>
-                                    </p>
-                                </div>
+                                {/*<div>*/}
+                                {/*    <label>Do You want to specify the recipients?</label>*/}
+                                {/*    <p>*/}
+                                {/*        <label>*/}
+                                {/*            <Field className="filled-in" name="specifyRecipients" component="input"*/}
+                                {/*                   type="checkbox"*/}
+                                {/*                   value={this.props.values?.specifyRecipients} checked={this.props.values?.specifyRecipients ? this.props.values?.specifyRecipients : false }/>*/}
+                                {/*            <span>Yes</span>*/}
+                                {/*        </label>*/}
+                                {/*    </p>*/}
+                                {/*</div>*/}
                                 {this.limitDetails()}
                                 <div className="flex flex-justify-between buttons">
                                     <Link to="/surveys" className="btn large red darken-4">Cancel</Link>

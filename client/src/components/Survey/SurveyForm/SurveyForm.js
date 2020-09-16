@@ -4,6 +4,7 @@ import SurveyFormFirstPage from "./SurveyFormFirstPage";
 import SurveyFormSecondPage from "./SurveyFormSecondPage";
 import SurveyFormThirdPage from "./SurveyFormThirdPage";
 import * as actions from "../../../store/actions";
+import SurveyFormLastPage from "./SurveyFormLastPage";
 
 class SurveyForm extends Component {
     onSubmit=(values)=>{
@@ -20,6 +21,9 @@ class SurveyForm extends Component {
                                              onSubmit={this.props.goToNextPage}/>;
             case 2:
                 return <SurveyFormThirdPage previousPage={this.props.goToPrevPage}
+                                            onSubmit={this.props.goToNextPage}/>;
+            case 3:
+                return <SurveyFormLastPage previousPage={this.props.goToPrevPage}
                                             onSubmit={this.onSubmit}/>;
             default:
                 return <p>Error</p>

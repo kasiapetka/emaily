@@ -52,8 +52,13 @@
   }
   margin-top: 5vw;
   background-color: white;
+
 }
 
+.question{
+  border-bottom: 1px solid #ffd740 !important;
+  padding: 20px 10px !important;
+}
 @media (max-width: 426px) {
   .survey {
     form {

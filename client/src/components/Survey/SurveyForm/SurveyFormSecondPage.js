@@ -8,7 +8,7 @@ import validate from './validate'
 const INPUTS = [
     {name: 'title', label: 'Survey Title'},
     {name: 'subject', label: 'Subject'},
-    {name: 'body', label: 'Email Body'},
+    {name: 'body', label: 'Body - notice for recipients'},
 ];
 
 class SurveyFormSecondPage extends Component {

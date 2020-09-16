@@ -6,7 +6,7 @@ import AnswerField from "./AnswerField";
 const renderDropdownOptions = ({fields, meta: {error, submitFailed}, questionIndex}) => {
     return (
             <div className="flex flex-justify-between">
-                <button className="btn btn-small indigo darken-4"
+                <button type="button" className="btn btn-small indigo darken-4"
                         onClick={() => fields.push()}>Add Answer</button>
                 <div>
                     {
@@ -25,8 +25,8 @@ const renderDropdownOptions = ({fields, meta: {error, submitFailed}, questionInd
 
 const QuestionDropdown = ({index, question, removeQuestion, fields}) => {
     return (
-        <div className="row" style={{borderBottom: '1px solid #ffd740', padding: '20px 10px'}}>
-            <div className="col s1"><button className="flex flex-middle btn btn-small red darken-4"
+        <div className="row question">
+            <div className="col s1"><button type="button" className="flex flex-middle btn btn-small red darken-4"
                                             style={{height:'25px', padding:'0 10px'}}
                                             onClick={()=>removeQuestion(index,fields)}>X</button></div>
             <div className="col s10">
