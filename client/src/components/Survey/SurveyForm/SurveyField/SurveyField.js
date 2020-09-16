@@ -1,11 +1,14 @@
 import React from "react";
+import { RiErrorWarningLine as Warning } from "react-icons/ri";
 
 export default ({ input, label, placeholder, disabled, type, meta: { touched, error } }) =>{
     return(
         <div className="survey-field">
             <label>{label}</label>
-                <input {...input} placeholder={placeholder} disabled={disabled} type={type}/>
-                {touched && error && <span className="error">{error}</span>}
+            <div style={{position:'relative'}}>
+                <input {...input} placeholder={placeholder} disabled={disabled} type={type} className={(touched && error) ? "error" : ""}/>
+                {touched && error && <Warning className="error-icon"/>}
+            </div>
         </div>
     );
 }

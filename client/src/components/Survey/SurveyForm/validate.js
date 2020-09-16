@@ -3,7 +3,7 @@ const validate = values => {
     if (!values.password) {
         errors.password = 'Required'
     }
-    if (!values.limit) {
+    if (!values.limit && !values.specifyRecipients) {
         errors.limit = 'This is a required field'
     }
     if(values.limit <= 0 || values.limit > 9999){

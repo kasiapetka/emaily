@@ -1,27 +1,24 @@
 import React, {Component} from 'react';
 import {RiCheckFill} from "react-icons/ri";
-import {Field, reduxForm} from "redux-form";
+import {Field, reduxForm,getFormValues } from "redux-form";
 import {Link} from "react-router-dom";
 import validate from './validate'
 import SurveyField from "./SurveyField/SurveyField";
+import {connect} from "react-redux";
 
 const renderError = ({meta: {touched, error}}) =>
-    touched && error ? <span className="error">{error}</span> : false;
+    touched && error ? <span style={{color: '#b71c1c'}}>{error}</span> : false;
 
 class SurveyFormFirstPage extends Component {
 
-    state = {
-        specifyRecipients: false
-    };
-
     limitDetails = () => {
-        if (this.state.specifyRecipients) {
+        if (this.props.values?.specifyRecipients) {
             return (
                 <div>
                     provide emails
                 </div>
             )
-        } else if (!this.state.specifyRecipients) {
+        } else if (!this.props.values?.specifyRecipients) {
             return (
                 <div>
                     <Field name="limit"
@@ -33,16 +30,6 @@ class SurveyFormFirstPage extends Component {
                 </div>
             )
         }
-    };
-
-    handleChange = (e) => {
-        const target = e.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]: value
-        });
     };
 
     render() {
@@ -81,8 +68,8 @@ class SurveyFormFirstPage extends Component {
                                     <p>
                                         <label>
                                             <Field className="filled-in" name="specifyRecipients" component="input"
-                                                   type="checkbox" onChange={(e) => this.handleChange(e)}
-                                                   value={this.state.specifyRecipients} checked={this.state.specifyRecipients}/>
+                                                   type="checkbox"
+                                                   value={this.props.values?.specifyRecipients} checked={this.props.values?.specifyRecipients ? this.props.values?.specifyRecipients : false }/>
                                             <span>Yes</span>
                                         </label>
                                     </p>
@@ -102,9 +89,13 @@ class SurveyFormFirstPage extends Component {
     }
 };
 
+SurveyFormFirstPage = connect(state => ({
+    values: getFormValues('surveyForm')(state),
+}))(SurveyFormFirstPage);
+
 export default reduxForm({
     form: 'surveyForm',
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
-   // validate
+    validate
 })(SurveyFormFirstPage);

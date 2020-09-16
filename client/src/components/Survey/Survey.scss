@@ -24,9 +24,20 @@
 
   &-field{
     .error{
-      color: #b71c1c;
+      border:1px solid #b71c1c !important;
+      background-color: rgba(183, 28, 28, 0.07) !important;
+      box-shadow: 0 0 2px 0 rgba(183, 28, 28, 0.7) !important;
       padding: 10px;
       font-size: 1rem;
+    }
+    .error-icon{
+      color: #b71c1c;
+      position: absolute;
+      padding: 10px;
+      min-width: 40px;
+      min-height: 40px;
+      right: 1%;
+      top:5%;
     }
   }
 }
