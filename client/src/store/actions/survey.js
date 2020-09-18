@@ -1,4 +1,5 @@
-import {GO_TO_NEXT_PAGE, UPDATE_SURVEY, GO_TO_PREV_PAGE} from "./types";
+import {GO_TO_NEXT_PAGE, GO_TO_PREV_PAGE, CREATE_SURVEY} from "./types";
+import axios from "axios";
 
 export const goToNextPage =()=>
     async dispatch => {
@@ -10,8 +11,8 @@ export const goToPrevPage =()=>
         dispatch({type: GO_TO_PREV_PAGE});
     };
 
-export const updateSurvey =(survey)=>
+export const createSurvey =(values)=>
     async dispatch => {
-        dispatch({type: UPDATE_SURVEY, payload: survey});
+        const res = await axios.post('/api/surveys', values);
+        dispatch({type: CREATE_SURVEY, payload: res});
     };
-

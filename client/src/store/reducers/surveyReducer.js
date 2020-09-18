@@ -1,4 +1,4 @@
-import { GO_TO_NEXT_PAGE, UPDATE_SURVEY, GO_TO_PREV_PAGE } from "../actions/types";
+import { GO_TO_NEXT_PAGE, GO_TO_PREV_PAGE, CREATE_SURVEY } from "../actions/types";
 
 const PAGES =  [
     {id: 0, name:'type'},
@@ -32,7 +32,7 @@ const surveyReducer = (state = initialState, action) => {
                 ...state,
                 currentPage: PAGES[state.currentPage.id - 1]
             };
-        case UPDATE_SURVEY:
+        case CREATE_SURVEY:
             return{
                 ...state,
                 survey: {

@@ -10,6 +10,7 @@ class SurveyForm extends Component {
     onSubmit=(values)=>{
     console.log(values)
         console.log(this.props.questions)
+        this.props.createSurvey(values);
     };
 
     renderStep(){
