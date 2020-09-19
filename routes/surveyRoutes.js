@@ -35,11 +35,25 @@ module.exports = app => {
         }
     });
 
-    app.get('/api/surveys/:surveyId', requireLogin, jsonParser, async (req, res) => {
+    app.get('/api/surveys/:surveyId', jsonParser, async (req, res) => {
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');
+        try {
+            const {password, limit, title, subject, body, questions,dateSend} = await Survey.findOne({_id: id});
+            const survey = {
+                //  password,
+                limit,
+                title,
+                subject,
+                body,
+                questions,
+                dateSend
+            };
 
-        res.status(200).send(id);
+            res.status(200).send(survey);
+        } catch (err) {
+            res.status(404).send(err);
+        }
 
     });
 };

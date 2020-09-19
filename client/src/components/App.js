@@ -7,6 +7,8 @@ import Dashboard from "./Dashboard/Dashboard";
 import {connect} from "react-redux";
 import * as actions from '../store/actions';
 import SurveyForm from "./Survey/SurveyForm/SurveyForm";
+import SurveyFill from "./Survey/SurveyFill/SurveyFill";
+import PrivateRoute from './privateRoute';
 
 class App extends Component {
 
@@ -22,8 +24,9 @@ class App extends Component {
                     <div>
                         <Switch>
                             <Route path='/' exact component={Landing}/>
-                            <Route path='/surveys' exact component={Dashboard}/>
-                            <Route path='/surveys/new' component={SurveyForm}/>
+                            <PrivateRoute path='/surveys' exact component={Dashboard}/>
+                            <PrivateRoute path='/surveys/new' component={SurveyForm}/>
+                            <Route path='/surveys/:surveyId' component={SurveyFill}/>
                             <Route path='/' component={ErrorMessage}/>
                         </Switch>
                     </div>

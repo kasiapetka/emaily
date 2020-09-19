@@ -3,9 +3,9 @@ import { reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import * as actions from "../../../store/actions";
 import {RiCheckFill} from "react-icons/ri";
-import QuestionABC from "../QuestionTypes/QuestionABC";
-import QuestionOpen from "../QuestionTypes/QuestionOpen";
-import QuestionDropdown from "../QuestionTypes/QuestionDropdown";
+import QuestionABC from "./QuestionTypes/QuestionABC";
+import QuestionOpen from "./QuestionTypes/QuestionOpen";
+import QuestionDropdown from "./QuestionTypes/QuestionDropdown";
 import {FieldArray} from "redux-form";
 import validate from './validate'
 

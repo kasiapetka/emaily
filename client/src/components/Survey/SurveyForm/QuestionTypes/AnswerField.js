@@ -1,6 +1,6 @@
 import React from 'react';
 import {Field} from "redux-form";
-import SurveyField from "../SurveyForm/SurveyField/SurveyField";
+import SurveyField from "../SurveyField/SurveyField";
 
 const AnswerField = ({index, questionIndex, answer, id}) => {
     return (

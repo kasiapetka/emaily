@@ -1,4 +1,4 @@
-import { GO_TO_NEXT_PAGE, GO_TO_PREV_PAGE, CREATE_SURVEY } from "../actions/types";
+import { GO_TO_NEXT_PAGE, GO_TO_PREV_PAGE, CREATE_SURVEY, FETCH_SURVEY } from "../actions/types";
 
 const PAGES =  [
     {id: 0, name:'type'},
@@ -10,14 +10,7 @@ const PAGES =  [
 
 const initialState = {
     currentPage: PAGES[0],
-    survey: {
-        password: false,
-        limit: null,
-        title: '',
-        body: '',
-        subject: '',
-        recipients: null
-    }
+    survey: null
 };
 
 const surveyReducer = (state = initialState, action) => {
@@ -32,12 +25,16 @@ const surveyReducer = (state = initialState, action) => {
                 ...state,
                 currentPage: PAGES[state.currentPage.id - 1]
             };
-        case CREATE_SURVEY:
+        case FETCH_SURVEY:
             return{
                 ...state,
                 survey: {
                     ...action.payload
                 }
+            };
+        case CREATE_SURVEY:
+            return{
+                ...state
             };
         default:
             return state;
