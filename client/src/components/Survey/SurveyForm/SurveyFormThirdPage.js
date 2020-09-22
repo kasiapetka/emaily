@@ -9,7 +9,7 @@ import QuestionDropdown from "./QuestionTypes/QuestionDropdown";
 import {FieldArray} from "redux-form";
 import validate from './validate'
 
-const QUESTION_TYPES = [
+export const QUESTION_TYPES = [
     {id: 0, name: 'open', label: 'Open Question'},
     {id: 1, name: 'abcSingle', label: 'ABC Single Answer'},
     {id: 2, name: 'abcMulti', label: 'ABC Multiple Answers'},
@@ -103,17 +103,10 @@ class SurveyFormThirdPage extends Component {
     }
 }
 
-function mapStateToProps({question}) {
-    return {
-        questions: {
-            ...question.questions
-        }
-    };
-}
 
 export default reduxForm({
     form: 'surveyForm',
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
     validate
-})(connect(mapStateToProps, actions)(SurveyFormThirdPage));
+})(connect(null, actions)(SurveyFormThirdPage));
