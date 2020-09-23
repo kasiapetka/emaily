@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import * as actions from "../../../store/actions";
-import {FieldArray, reduxForm} from "redux-form";
+import {FieldArray, getFormValues, reduxForm} from "redux-form";
 import AnswerOpen from "./AnswerTypes/AnswerOpen";
 import AnswerABC from "./AnswerTypes/AnswerABC";
 import AnswerDropdown from "./AnswerTypes/AnswerDropdown";
@@ -28,15 +28,17 @@ class SurveyFill extends Component {
                                                        question={question}
                                     />;
                                 case 1:
-                                    return <AnswerABC key={index} index={index}
+                                    return <AnswerABC key={index} questionIndex={index}
                                                       answers={answers}
                                                       id={1}
+                                                      values={this.props.values}
                                                       question={question}
                                     />;
                                 case 2:
-                                    return <AnswerABC key={index} index={index}
+                                    return <AnswerABC key={index} questionIndex={index}
                                                       answers={answers}
                                                       id={2}
+                                                      values={this.props.values}
                                                       question={question}
                                     />;
                                 case 3:
@@ -48,7 +50,6 @@ class SurveyFill extends Component {
                         })
                     }
                 </div>
-
             </div>
         );
     };
@@ -92,7 +93,9 @@ function mapStateToProps({survey}) {
         }
     };
 }
-
+SurveyFill = connect(state => ({
+    values: getFormValues('surveyFill')(state),
+}))(SurveyFill);
 
 export default reduxForm({
     form: 'surveyFill',

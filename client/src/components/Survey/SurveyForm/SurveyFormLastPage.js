@@ -18,10 +18,11 @@ class SurveyFormLastPage extends Component {
                     {question.answers.map((answer, i) => {
                         return<p key={i} style={{paddingLeft: "15px"}}>
                                 <label>
-                                    <Field name="password"
+                                    <Field name={"answers["+index+"]"}
                                            component="input"
                                            type="radio"
                                            disabled={true}
+                                           checked={false}
                                     />
                                     <span>{index + 1}.{i} {answer}</span>
                                 </label>

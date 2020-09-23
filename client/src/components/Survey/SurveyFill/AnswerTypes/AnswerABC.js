@@ -1,32 +1,55 @@
 import React from 'react';
-import {Field, FieldArray} from "redux-form";
-import AnswerField from "./AnswerField";
+import {Field} from "redux-form";
+import '../../Survey.scss'
 
-const renderAnswers = ({fields, meta: {error, submitFailed}, questionIndex}) => {
-    return (
-        <div className="flex flex-column row">
-            <div className="col s12">
-                {
-                    fields.map((answer, index) =>
-                        <AnswerField
-                            key={index}
-                            index={index}
-                            answer={answer}
-                            questionIndex={questionIndex}/>)
-                }
-            </div>
-            <div className="col m4 offset-m4 s12 center">
-                <button type="button" className="btn btn-small indigo darken-4"
-                        onClick={() => fields.push()}>Add Answer</button>
-            </div>
-        </div>
-    );
+const renderRadioOptions = ({questionIndex, answers, values}) => {
+    return answers.map((answer, index) => {
+        return <p key={index}>
+            <label>
+                <Field name={'answers[' + questionIndex + ']'}
+                       component="input"
+                       type="radio"
+                       value={index}
+                       checked={values && values.answers[questionIndex] ? +values.answers[questionIndex] === index : false}
+                />
+                <span>{answer}</span>
+            </label>
+        </p>
+    })
 };
 
-const AnswerABC = ({index, question, id, removeQuestion, fields}) => {
+const renderCheckboxesOptions = ({questionIndex, answers, values}) => {
+    return answers.map((answer, index) => {
+        return <p key={index}>
+            <label>
+                <Field className="filled-in" name={'answers[' + questionIndex + '].answer[' + index + ']'}
+                       component="input"
+                       type="checkbox"
+                       value={index}
+                />
+                <span>{answer}</span>
+            </label>
+        </p>
+    })
+};
+
+const AnswerABC = ({questionIndex, question, id, answers, values}) => {
     return (
-        <div className="row question">
-            AnswerABC
+        <div className="row question ">
+            <div className="col s12 survey">
+                <p className="question-fill">{questionIndex + 1}. {question}</p>
+                <div className="flex flex-column row">
+                    <div className="col s11 survey-field">
+                        {
+                            id === 2
+                                ?
+                                renderRadioOptions({answers, questionIndex, values})
+                                :
+                                renderCheckboxesOptions({answers, questionIndex, values})
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
 
     );

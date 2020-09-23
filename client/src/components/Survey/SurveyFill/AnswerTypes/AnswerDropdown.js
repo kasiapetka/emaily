@@ -1,6 +1,5 @@
 import React from 'react';
-import {Field, FieldArray} from "redux-form";
-import AnswerField from "./AnswerField";
+import {Field} from "redux-form";
 
 const renderDropdownOptions = ({ input, label, answers, meta: {error, touched}}) => {
     return (
@@ -24,8 +23,7 @@ const AnswerDropdown = ({index, question, answers}) => {
         <div className="row question">
             <div className="col s10">
                 <p className="question-fill">{index + 1}. {question}</p>
-                <Field name={'answers['+index+']'} component={renderDropdownOptions} answers={answers}>
-                </Field>
+                <Field name={'answers['+index+']'} component={renderDropdownOptions} answers={answers}/>
             </div>
         </div>
     );
