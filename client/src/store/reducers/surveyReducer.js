@@ -1,4 +1,4 @@
-import { GO_TO_NEXT_PAGE, GO_TO_PREV_PAGE, CREATE_SURVEY, FETCH_SURVEY } from "../actions/types";
+import { GO_TO_NEXT_PAGE, GO_TO_PREV_PAGE, CREATE_SURVEY, FETCH_SURVEY, ADD_REPLY } from "../actions/types";
 
 const PAGES =  [
     {id: 0, name:'type'},
@@ -33,6 +33,10 @@ const surveyReducer = (state = initialState, action) => {
                 }
             };
         case CREATE_SURVEY:
+            return{
+                ...state
+            };
+        case ADD_REPLY:
             return{
                 ...state
             };

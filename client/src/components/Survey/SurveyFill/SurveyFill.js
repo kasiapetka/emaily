@@ -62,7 +62,7 @@ class SurveyFill extends Component {
                 <div className="container">
                     <div className="survey row">
                         <div className="col m8 s12">
-                            <form onSubmit={this.props.handleSubmit((values) => console.log(values))}>
+                            <form onSubmit={this.props.handleSubmit((values) => this.props.addReply(this.props.match.params.surveyId,values))}>
                                 <h5>Title: {this.props.survey.title}</h5>
                                 <h6>Subject: {this.props.survey.subject}</h6>
                                 <h6>Body: {this.props.survey.body}</h6>

@@ -7,7 +7,7 @@ const renderDropdownOptions = ({ input, label, answers, meta: {error, touched}})
             <label>{label}</label>
             <div style={{position: 'relative'}}>
                 <select {...input} style={{display: 'block'}}>
-                    <option value="">Answers</option>
+                    <option value="" disabled>Answers</option>
                     {answers.map((answer, index) => {
                         return <option key={index} value={index}>{answer}</option>;
                     })}

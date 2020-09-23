@@ -54,9 +54,21 @@ module.exports = app => {
         } catch (err) {
             res.status(404).send(err);
         }
+    });
+
+    app.post('/api/surveys/:surveyId', requireLogin, jsonParser, async (req, res) => {
+        const replies = req.body;
+        const buff = Buffer.from(req.params.surveyId, 'base64');
+        const id = buff.toString('utf-8');
+        try {
+            await Survey.update({_id: id},{$push:{replies:replies}});
+            res.status(200).send('oki');
+        } catch (err) {
+            res.status(422).send(err);
+        }
 
     });
-};
 
+};
 
 //recipients.split(',').map(email => ({email: email.trim()})),

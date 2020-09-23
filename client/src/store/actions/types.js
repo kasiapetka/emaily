@@ -4,6 +4,7 @@ export const CREATE_SURVEY='CREATE_SURVEY';
 export const GO_TO_NEXT_PAGE='GO_TO_NEXT_PAGE';
 export const GO_TO_PREV_PAGE='GO_TO_PREV_PAGE';
 export const FETCH_SURVEY='FETCH_SURVEY';
+export const ADD_REPLY ='ADD_REPLY';
 
 export const UPDATE_SURVEY='UPDATE_SURVEY';
 
