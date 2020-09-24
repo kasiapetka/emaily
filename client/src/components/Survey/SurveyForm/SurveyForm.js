@@ -5,11 +5,15 @@ import SurveyFormSecondPage from "./SurveyFormSecondPage";
 import SurveyFormThirdPage from "./SurveyFormThirdPage";
 import * as actions from "../../../store/actions";
 import SurveyFormLastPage from "./SurveyFormLastPage";
+import Spinner from "../../UI/Spinner/Spinner";
 
 class SurveyForm extends Component {
+
+    componentDidMount() {
+        this.props.createInit();
+    }
+
     onSubmit=(values)=>{
-    console.log(values)
-        console.log(this.props.questions)
         this.props.createSurvey(values);
     };
 
@@ -32,9 +36,17 @@ class SurveyForm extends Component {
     }
 
     render() {
+        let content;
+        if(this.props.error){
+            content = <p>{this.props.error}</p>;
+        }else if(this.props.loading){
+            content = <Spinner/>;
+        }else{
+            content = this.renderStep();
+        }
         return (
             <div>
-                {this.renderStep()}
+                {content}
             </div>
         );
     }
@@ -43,7 +55,9 @@ class SurveyForm extends Component {
 function mapStateToProps({survey, question}) {
     return {
         currentPage: survey.currentPage,
-        questions: question.questions
+        questions: question.questions,
+        loading: survey.loading,
+        error: survey.error,
     };
 }
 

@@ -5,8 +5,10 @@ export const GO_TO_NEXT_PAGE='GO_TO_NEXT_PAGE';
 export const GO_TO_PREV_PAGE='GO_TO_PREV_PAGE';
 export const FETCH_SURVEY='FETCH_SURVEY';
 export const ADD_REPLY ='ADD_REPLY';
+export const SURVEY_FAILED ='SURVEY_FAILED';
+export const LOADING_START='LOADING_START';
+export const CREATE_INIT='CREATE_INIT';
 
-export const UPDATE_SURVEY='UPDATE_SURVEY';
 
 export const ADD_QUESTION='ADD_QUESTION';
 export const ADD_ANSWER='ADD_ANSWER';

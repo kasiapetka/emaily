@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import validate from './validate'
 import SurveyField from "./SurveyField/SurveyField";
 import {connect} from "react-redux";
+import * as actions from "../../../store/actions";
 
 const renderError = ({meta: {touched, error}}) =>
     touched && error ? <span style={{color: '#b71c1c'}}>{error}</span> : false;
@@ -33,8 +34,11 @@ class SurveyFormFirstPage extends Component {
     };
 
     render() {
-        return (
-            <div className="bg bg-secondary">
+        let content;
+        if(this.props.surveyCreatedSuccess){
+            content = <p>Created ;^)</p>;
+        }else{
+            content = <div className="bg bg-secondary">
                 <div className="container">
                     <div className="survey row">
                         <div className="col m8 s12">
@@ -85,9 +89,16 @@ class SurveyFormFirstPage extends Component {
                     </div>
                 </div>
             </div>
-        );
+        }
+        return content;
     }
 };
+
+function mapStateToProps({survey}) {
+    return {
+        surveyCreatedSuccess: survey.surveyCreatedSuccess
+    };
+}
 
 SurveyFormFirstPage = connect(state => ({
     values: getFormValues('surveyForm')(state),
@@ -98,4 +109,4 @@ export default reduxForm({
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
     validate
-})(SurveyFormFirstPage);
+})(connect(mapStateToProps, actions)(SurveyFormFirstPage));

@@ -54,7 +54,6 @@ class SurveyFill extends Component {
         );
     };
 
-
     render() {
         let content = <Spinner/>;
         if (this.props.survey.questions) {

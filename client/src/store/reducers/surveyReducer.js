@@ -1,4 +1,13 @@
-import { GO_TO_NEXT_PAGE, GO_TO_PREV_PAGE, CREATE_SURVEY, FETCH_SURVEY, ADD_REPLY } from "../actions/types";
+import {
+    GO_TO_NEXT_PAGE,
+    GO_TO_PREV_PAGE,
+    CREATE_SURVEY,
+    FETCH_SURVEY,
+    ADD_REPLY,
+    SURVEY_FAILED,
+    LOADING_START,
+    CREATE_INIT
+} from "../actions/types";
 
 const PAGES =  [
     {id: 0, name:'type'},
@@ -10,7 +19,10 @@ const PAGES =  [
 
 const initialState = {
     currentPage: PAGES[0],
-    survey: null
+    survey: null,
+    error: null,
+    loading: false,
+    surveyCreatedSuccess: false
 };
 
 const surveyReducer = (state = initialState, action) => {
@@ -32,13 +44,33 @@ const surveyReducer = (state = initialState, action) => {
                     ...action.payload
                 }
             };
+        case CREATE_INIT:
+            return{
+                ...state,
+                surveyCreatedSuccess: false,
+                currentPage: PAGES[0]
+            };
         case CREATE_SURVEY:
             return{
-                ...state
+                ...state,
+                loading: false,
+                surveyCreatedSuccess: true,
+                currentPage: PAGES[0]
             };
         case ADD_REPLY:
             return{
                 ...state
+            };
+        case LOADING_START:
+            return{
+                ...state,
+                loading: true
+            };
+        case SURVEY_FAILED:
+            return{
+                ...state,
+                error: action.error,
+                loading: false
             };
         default:
             return state;
