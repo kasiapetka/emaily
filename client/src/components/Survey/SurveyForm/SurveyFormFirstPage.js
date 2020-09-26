@@ -6,6 +6,7 @@ import validate from './validate'
 import SurveyField from "./SurveyField/SurveyField";
 import {connect} from "react-redux";
 import * as actions from "../../../store/actions";
+import SurveyFormSuccess from "./SurveyFormSuccess";
 
 const renderError = ({meta: {touched, error}}) =>
     touched && error ? <span style={{color: '#b71c1c'}}>{error}</span> : false;
@@ -36,7 +37,7 @@ class SurveyFormFirstPage extends Component {
     render() {
         let content;
         if(this.props.surveyCreatedSuccess){
-            content = <p>Created ;^)</p>;
+            content = <SurveyFormSuccess URL={this.props.surveyCreatedURL}/>;
         }else{
             content = <div className="bg bg-secondary">
                 <div className="container">
@@ -96,7 +97,8 @@ class SurveyFormFirstPage extends Component {
 
 function mapStateToProps({survey}) {
     return {
-        surveyCreatedSuccess: survey.surveyCreatedSuccess
+        surveyCreatedSuccess: survey.surveyCreatedSuccess,
+        surveyCreatedURL: survey.surveyCreatedURL
     };
 }
 

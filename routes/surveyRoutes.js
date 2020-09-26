@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
+const requireSurveyPassword = require('../middlewares/requireSurveyPassword');
 const Survey = mongoose.model('surveys');
 const bodyParser = require('body-parser');
 
@@ -9,8 +10,12 @@ const jsonParser = bodyParser.json();
 module.exports = app => {
     app.post('/api/surveys', requireLogin, jsonParser, async (req, res) => {
         const {password, limit, title, subject, body, questions} = req.body;
+        let pass;
+        if(password === "true")
+        pass = Math.random().toString(36).slice(-10);
+
         const survey = new Survey({
-            //  password,
+            password: pass,
             limit: parseInt(limit, 10),
             title,
             subject,
@@ -35,7 +40,7 @@ module.exports = app => {
         }
     });
 
-    app.get('/api/surveys/:surveyId', jsonParser, async (req, res) => {
+    app.get('/api/surveys/:surveyId',requireSurveyPassword, jsonParser, async (req, res) => {
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');
         try {
@@ -56,7 +61,7 @@ module.exports = app => {
         }
     });
 
-    app.post('/api/surveys/:surveyId', jsonParser, async (req, res) => {
+    app.post('/api/surveys/reply/:surveyId', jsonParser, async (req, res) => {
         const replies = req.body;
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');
@@ -66,7 +71,6 @@ module.exports = app => {
         } catch (err) {
             res.status(422).send(err);
         }
-
     });
 
 };

@@ -7,12 +7,12 @@ import AnswerABC from "./AnswerTypes/AnswerABC";
 import AnswerDropdown from "./AnswerTypes/AnswerDropdown";
 import Spinner from "../../UI/Spinner/Spinner";
 import {RiCheckFill} from "react-icons/ri";
+import SurveyFormSuccess from "../SurveyForm/SurveyFormSuccess";
 
 class SurveyFill extends Component {
 
     componentDidMount() {
         this.props.fetchSurvey(this.props.match.params.surveyId);
-        console.log(this.props.survey)
     }
 
     renderAnswers = () => {
@@ -55,8 +55,12 @@ class SurveyFill extends Component {
     };
 
     render() {
-        let content = <Spinner/>;
-        if (this.props.survey.questions) {
+        let content;
+        if(this.props.error === 401){
+            content = <p>musisz sie zalogowac ta ankieta chce haslo</p>
+        }else if(this.props.loading || !this.props.survey.questions){
+            content = <Spinner/>
+        }else if (!this.props.surveyRepliedSuccess) {
             content = <div className="bg bg-secondary">
                 <div className="container">
                     <div className="survey row">
@@ -76,6 +80,8 @@ class SurveyFill extends Component {
                     </div>
                 </div>
             </div>
+        }else{
+            content = <SurveyFormSuccess/>;
         }
         return (
             <div>
@@ -87,9 +93,12 @@ class SurveyFill extends Component {
 
 function mapStateToProps({survey}) {
     return {
+        loading: survey.loading,
+        error: survey.error,
+        surveyRepliedSuccess: survey.surveyRepliedSuccess,
         survey: {
             ...survey.survey
-        }
+        },
     };
 }
 SurveyFill = connect(state => ({

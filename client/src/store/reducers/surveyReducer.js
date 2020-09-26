@@ -6,7 +6,8 @@ import {
     ADD_REPLY,
     SURVEY_FAILED,
     LOADING_START,
-    CREATE_INIT
+    CREATE_INIT,
+    ADD_INIT
 } from "../actions/types";
 
 const PAGES =  [
@@ -22,7 +23,9 @@ const initialState = {
     survey: null,
     error: null,
     loading: false,
-    surveyCreatedSuccess: false
+    surveyCreatedSuccess: false,
+    surveyRepliedSuccess: false,
+    surveyCreatedURL: null
 };
 
 const surveyReducer = (state = initialState, action) => {
@@ -41,8 +44,10 @@ const surveyReducer = (state = initialState, action) => {
             return{
                 ...state,
                 survey: {
-                    ...action.payload
-                }
+                    ...action.payload,
+                },
+                surveyRepliedSuccess: false,
+                loading: false
             };
         case CREATE_INIT:
             return{
@@ -55,11 +60,14 @@ const surveyReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 surveyCreatedSuccess: true,
+                surveyCreatedURL: action.payload,
                 currentPage: PAGES[0]
             };
         case ADD_REPLY:
             return{
-                ...state
+                ...state,
+                loading: false,
+                surveyRepliedSuccess: true
             };
         case LOADING_START:
             return{
@@ -67,6 +75,7 @@ const surveyReducer = (state = initialState, action) => {
                 loading: true
             };
         case SURVEY_FAILED:
+            console.log('dfsdfsfs')
             return{
                 ...state,
                 error: action.error,

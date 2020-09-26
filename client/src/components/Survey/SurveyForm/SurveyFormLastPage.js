@@ -51,7 +51,6 @@ class SurveyFormLastPage extends Component {
     };
 
     render() {
-
         return <div className="bg bg-secondary">
             <div className="container">
                 <div className="survey row">

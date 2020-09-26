@@ -9,7 +9,6 @@ export const SURVEY_FAILED ='SURVEY_FAILED';
 export const LOADING_START='LOADING_START';
 export const CREATE_INIT='CREATE_INIT';
 
-
 export const ADD_QUESTION='ADD_QUESTION';
 export const ADD_ANSWER='ADD_ANSWER';
 export const REMOVE_QUESTION='REMOVE_QUESTION';
