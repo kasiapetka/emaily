@@ -1,4 +1,5 @@
 export const FETCH_USER = 'FETCH_USER';
+export const SURVEY_FILL_LOGIN='SURVEY_FILL_LOGIN';
 
 export const CREATE_SURVEY='CREATE_SURVEY';
 export const GO_TO_NEXT_PAGE='GO_TO_NEXT_PAGE';

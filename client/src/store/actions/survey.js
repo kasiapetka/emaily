@@ -6,7 +6,7 @@ import {
     ADD_REPLY,
     SURVEY_FAILED,
     LOADING_START,
-    CREATE_INIT,
+    CREATE_INIT, SURVEY_FILL_LOGIN,
 } from "./types";
 
 import axios from "axios";
@@ -26,11 +26,24 @@ export const createInit = () =>
         dispatch({type: CREATE_INIT});
     };
 
-export const fetchSurvey =(id)=>
+export const loginToSurvey = (password, id) =>
+    async dispatch => {
+        const res = await axios.post('/api/surveys/'+id,{password:password});
+        dispatch({type: SURVEY_FILL_LOGIN, token: res.data});
+    };
+
+
+export const fetchSurvey =(id,surveyToken)=>
     async dispatch => {
         dispatch({type: LOADING_START});
         try {
-            const res = await axios.get('/api/surveys/'+id);
+            let headers;
+            if(surveyToken){
+                headers={
+                    token: surveyToken
+                }
+            }
+            const res = await axios.get('/api/surveys/'+id,{headers : headers});
             dispatch({type: FETCH_SURVEY, payload: res.data});
         } catch (error) {
             dispatch({type: SURVEY_FAILED, error: error.response.status});
@@ -48,11 +61,17 @@ export const createSurvey =(values)=>
         }
     };
 
-export const addReply =(surveyURL,answers)=>
+export const addReply =(surveyURL,answers,surveyToken)=>
     async dispatch => {
         dispatch({type: LOADING_START});
         try {
-            const res = await axios.post('/api/surveys/reply/'+surveyURL, answers);
+            let headers;
+            if(surveyToken){
+                headers={
+                    token: surveyToken
+                }
+            }
+            const res = await axios.post('/api/surveys/reply/'+surveyURL, answers, {headers : headers});
             dispatch({type: ADD_REPLY, payload: res});
         } catch (error) {
             dispatch({type: SURVEY_FAILED, error: error.message});

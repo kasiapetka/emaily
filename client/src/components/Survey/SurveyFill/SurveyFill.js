@@ -8,11 +8,17 @@ import AnswerDropdown from "./AnswerTypes/AnswerDropdown";
 import Spinner from "../../UI/Spinner/Spinner";
 import {RiCheckFill} from "react-icons/ri";
 import SurveyFormSuccess from "../SurveyForm/SurveyFormSuccess";
+import SurveyFillLogin from "./SurveyFillLogin/SurveyFillLogin";
 
 class SurveyFill extends Component {
 
     componentDidMount() {
-        this.props.fetchSurvey(this.props.match.params.surveyId);
+        this.props.fetchSurvey(this.props.match.params.surveyId, this.props.surveyToken);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.surveyToken !== prevProps.surveyToken)
+        this.props.fetchSurvey(this.props.match.params.surveyId, this.props.surveyToken);
     }
 
     renderAnswers = () => {
@@ -57,7 +63,7 @@ class SurveyFill extends Component {
     render() {
         let content;
         if(this.props.error === 401){
-            content = <p>musisz sie zalogowac ta ankieta chce haslo</p>
+            content = <SurveyFillLogin surveyId ={this.props.match.params.surveyId}/>
         }else if(this.props.loading || !this.props.survey.questions){
             content = <Spinner/>
         }else if (!this.props.surveyRepliedSuccess) {
@@ -65,7 +71,8 @@ class SurveyFill extends Component {
                 <div className="container">
                     <div className="survey row">
                         <div className="col m8 s12">
-                            <form onSubmit={this.props.handleSubmit((values) => this.props.addReply(this.props.match.params.surveyId,values))}>
+                            <form onSubmit={this.props.handleSubmit((values) =>
+                                this.props.addReply(this.props.match.params.surveyId,values, this.props.surveyToken))}>
                                 <h5>Title: {this.props.survey.title}</h5>
                                 <h6>Subject: {this.props.survey.subject}</h6>
                                 <h6>Body: {this.props.survey.body}</h6>
@@ -93,6 +100,7 @@ class SurveyFill extends Component {
 
 function mapStateToProps({survey}) {
     return {
+        surveyToken: survey.surveyToken,
         loading: survey.loading,
         error: survey.error,
         surveyRepliedSuccess: survey.surveyRepliedSuccess,

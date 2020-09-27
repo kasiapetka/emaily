@@ -18,7 +18,6 @@ passport.deserializeUser((id, done) => {
         });
 });
 
-
 passport.use(new GoogleStrategy({
         clientID: keys.googleClientId,
         clientSecret: keys.googleClientSecret,

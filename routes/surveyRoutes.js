@@ -61,7 +61,7 @@ module.exports = app => {
         }
     });
 
-    app.post('/api/surveys/reply/:surveyId', jsonParser, async (req, res) => {
+    app.post('/api/surveys/reply/:surveyId',requireSurveyPassword, jsonParser, async (req, res) => {
         const replies = req.body;
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');

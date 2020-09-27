@@ -3,6 +3,8 @@ const passport = require('passport');
 const Survey = mongoose.model('surveys');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+const jwt = require('jsonwebtoken');
+const keys = require('../config/keys');
 
 module.exports = app => {
     app.get('/auth/google',
@@ -33,6 +35,8 @@ module.exports = app => {
         const id = buff.toString('utf-8');
         try {
             const password = req.body.password;
+            console.log(req.body)
+
             //Check if password is given
             if(!password) return res.status(400).send("Give password!");
 
@@ -40,8 +44,13 @@ module.exports = app => {
             const survey= await Survey.findOne({_id: id});
             if(survey.password !== password) return res.status(400).send("Wrong password!");
 
-            //res.header('token',token).send(token);
-            //TODO wyslac token
+            //Create and assign token for 2h
+            const token = jwt.sign({
+                _id: id,
+                exp: Math.floor(Date.now() / 1000) + (60 * 60 *2)
+            },keys.tokenSecret);
+
+            res.header('token',token).send(token);
 
         } catch (err) {
             res.status(400).send(err);
