@@ -37,7 +37,7 @@ class SurveyFormFirstPage extends Component {
     render() {
         let content;
         if(this.props.surveyCreatedSuccess){
-            content = <SurveyFormSuccess URL={this.props.surveyCreatedURL}/>;
+            content = <SurveyFormSuccess URL={this.props.surveyCreatedURL} password={this.props.surveyCreatedPass}/>;
         }else{
             content = <div className="bg bg-secondary">
                 <div className="container">
@@ -98,7 +98,8 @@ class SurveyFormFirstPage extends Component {
 function mapStateToProps({survey}) {
     return {
         surveyCreatedSuccess: survey.surveyCreatedSuccess,
-        surveyCreatedURL: survey.surveyCreatedURL
+        surveyCreatedURL: survey.surveyCreatedURL,
+        surveyCreatedPass: survey.surveyCreatedPass
     };
 }
 

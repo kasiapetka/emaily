@@ -64,6 +64,8 @@ class SurveyFill extends Component {
         let content;
         if(this.props.error === 401){
             content = <SurveyFillLogin surveyId ={this.props.match.params.surveyId}/>
+        }else if(this.props.error === 409){
+            content = <p>The survey is full!</p>
         }else if(this.props.loading || !this.props.survey.questions){
             content = <Spinner/>
         }else if (!this.props.surveyRepliedSuccess) {

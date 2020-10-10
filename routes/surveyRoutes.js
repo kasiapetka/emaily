@@ -34,7 +34,7 @@ module.exports = app => {
 
         try {
             await survey.save();
-            res.status(200).send(survey.URL);
+            res.status(200).send({URL: survey.URL, password: survey.password});
         } catch (err) {
             res.status(422).send(err);
         }
@@ -44,29 +44,32 @@ module.exports = app => {
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');
         try {
-            const {password, limit, title, subject, body, questions,dateSend} = await Survey.findOne({_id: id});
+            const {limit, title, subject, body, questions,dateSend, replies} = await Survey.findOne({_id: id});
             const survey = {
-                //  password,
                 limit,
                 title,
                 subject,
                 body,
                 questions,
-                dateSend
+                dateSend,
             };
 
-            res.status(200).send(survey);
+            if(replies && survey.limit === replies.length){
+                res.status(409).send();
+            }else{
+                res.status(200).send(survey);
+            }
         } catch (err) {
             res.status(404).send(err);
         }
     });
 
     app.post('/api/surveys/reply/:surveyId',requireSurveyPassword, jsonParser, async (req, res) => {
-        const replies = req.body;
+        const reply = req.body;
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');
         try {
-            await Survey.update({_id: id},{$push:{replies:replies}});
+            await Survey.update({_id: id},{$push:{replies:reply}, $set: { lastResponded: Date.now() }});
             res.status(200).send('oki');
         } catch (err) {
             res.status(422).send(err);

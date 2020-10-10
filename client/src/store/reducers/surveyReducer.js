@@ -53,14 +53,16 @@ const surveyReducer = (state = initialState, action) => {
             return{
                 ...state,
                 surveyCreatedSuccess: false,
-                currentPage: PAGES[0]
+                currentPage: PAGES[0],
+                error: null,
             };
         case CREATE_SURVEY:
             return{
                 ...state,
                 loading: false,
                 surveyCreatedSuccess: true,
-                surveyCreatedURL: action.payload,
+                surveyCreatedURL: action.payload.URL,
+                surveyCreatedPass: action.payload.password,
                 currentPage: PAGES[0]
             };
         case SURVEY_FILL_LOGIN:

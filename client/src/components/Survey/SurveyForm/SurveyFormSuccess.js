@@ -19,6 +19,15 @@ export default (props) => {
                     {window.location.origin + "/surveys/" + props.URL}
                 </h5>
             </Link>
+
+            {
+                props.password
+                ?
+                    <p>Password is: {props.password}</p>
+                    :
+                    null
+            }
+
         </React.Fragment>
     }else content =  <h5>Your reply has been sent. Thank You!</h5>;
 
@@ -26,12 +35,12 @@ export default (props) => {
         <div className="row">
             <div className="col l8 offset-l2 s12">
                 <div className='flex flex-middle flex-column success'>
-                    <h3 className='flex flex-column flex-middle' style={{marginTop: 0, maxWidth: '100vw'}}>
+                    <div className='flex flex-column flex-middle' style={{marginTop: 0, maxWidth: '100vw'}}>
                         <h2>
                             <Success/>
                         </h2>
                         {content}
-                    </h3>
+                    </div>
 
                     <Link to={"/"}
                           className="inline">
