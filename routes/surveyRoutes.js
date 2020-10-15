@@ -76,10 +76,6 @@ module.exports = app => {
         }
     });
 
-    app.get('/', requireLogin, async (req, res) => {
-        res.status(200).send('Hello World!');
-    });
-
 };
 
 //recipients.split(',').map(email => ({email: email.trim()})),
