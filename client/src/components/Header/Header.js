@@ -6,11 +6,6 @@ import './Header.scss';
 
 class Header extends Component {
 
-    componentDidMount() {
-        console.log(this.props)
-    }
-
-
     renderContent() {
         switch (this.props.auth) {
             case null:
