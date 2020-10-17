@@ -83,7 +83,6 @@ class SurveyFormThirdPage extends Component {
     };
 
     render() {
-        console.log(this.props.values)
         return (
             <div className="bg bg-secondary">
                 <div className="container">
@@ -93,7 +92,8 @@ class SurveyFormThirdPage extends Component {
                             <div className="flex flex-justify-between buttons">
                                 <button onClick={this.props.previousPage} className="btn large red darken-4">Back
                                 </button>
-                                <button type="submit" className="btn large indigo darken-4" disabled={!this.props.values.questions}>Next <RiCheckFill/>
+                                <button type="submit" className="btn large indigo darken-4"
+                                        disabled={!this.props.values.questions || this.props.values.questions.length === 0}>Next <RiCheckFill/>
                                 </button>
                             </div>
                         </form>

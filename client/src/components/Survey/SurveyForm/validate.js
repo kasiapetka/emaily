@@ -41,7 +41,6 @@ const validate = values => {
                     questionErrors.answers = answerArrayErrors;
                     questionsArrayErrors[index] = questionErrors
                 }
-
             }
         });
         if (questionsArrayErrors.length) {

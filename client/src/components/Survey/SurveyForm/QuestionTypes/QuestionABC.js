@@ -8,12 +8,22 @@ const renderAnswers = ({fields, meta: {error, submitFailed}, questionIndex}) => 
         <div className="flex flex-column row">
             <div className="col s12">
                 {
-                    fields.map((answer, index) =>
-                        <AnswerField
-                            key={index}
-                            index={index}
-                            answer={answer}
-                            questionIndex={questionIndex}/>)
+                    fields.map((answer, index) =>{
+                        return (
+                            <div  key={index} className="row flex flex-middle">
+                                <div className="col s11">
+                                    <AnswerField
+                                        index={index}
+                                        answer={answer}
+                                        questionIndex={questionIndex}/>
+                                </div>
+
+                                <button type="button" className="btn btn-small red darken-4 col s1"
+                                        onClick={() => fields.remove(index)}>X</button>
+                            </div>
+
+                            )
+                    })
                 }
             </div>
             <div className="col m4 offset-m4 s12 center">
