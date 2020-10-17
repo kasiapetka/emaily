@@ -1,3 +1,5 @@
+@import "src/styles/Variables";
+
 .survey {
   label {
     font-size: 1.2rem;
@@ -5,7 +7,7 @@
 
   form {
     margin-top: 5vw;
-    border: 1px dashed #b71c1c;
+    border: 1px dashed $primary-red;
     padding: 20px;
   }
 
@@ -18,26 +20,34 @@
   }
 
   [type="radio"]:checked+span:after, [type="checkbox"].filled-in:checked+span:not(.lever):after {
-    border: 2px solid #1a237e;
-    background-color: #1a237e;
+    border: 2px solid $primary-blue;
+    background-color: $primary-blue;
   }
 
   &-field{
     .error{
-      border:1px solid #b71c1c !important;
+      border:1px solid $primary-red !important;
       background-color: rgba(183, 28, 28, 0.07) !important;
-      box-shadow: 0 0 2px 0 rgba(183, 28, 28, 0.7) !important;
+      box-shadow: 0 0 2px 0 $primary-red-semi !important;
       padding: 10px;
       font-size: 1rem;
     }
+
     .error-icon{
-      color: #b71c1c;
+      color: $primary-red;
       position: absolute;
       padding: 10px;
       min-width: 40px;
       min-height: 40px;
       right: 1%;
       top:5%;
+    }
+
+    .validation-message{
+      color: $primary-red !important;
+      padding: 0;
+      margin: 0;
+      font-size: 0.8rem;
     }
   }
 }
@@ -56,7 +66,7 @@
 }
 
 .question{
-  border-bottom: 1px solid #ffd740 !important;
+  border-bottom: 1px solid $primary-yellow !important;
   padding: 20px 10px !important;
 }
 
@@ -66,7 +76,7 @@
 
 .success{
   margin-top: 5vw;
-  border: 2px dashed #1a237e;
+  border: 2px dashed $primary-blue;
   padding: 20px 10px 50px;
 }
 

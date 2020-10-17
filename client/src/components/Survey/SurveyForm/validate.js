@@ -18,23 +18,37 @@ const validate = values => {
     if (!values.subject) {
         errors.subject = 'Email subject is required'
     }
-    // if (!values.questions) {
-    //     errors.questions = 'Create a question!'
-    // }
-    // if (values.questions) {
-    //     values.questions.forEach((q,index) => {
-    //         if(!q.question || q.question==="" || !q.answers){
-    //             errors.questions = 'Ask a question'
-    //         }
-    //         if(q.answers){
-    //             q.answers.forEach((a,index)=>{
-    //                 if(!a || a===""){
-    //                     errors.questions = 'Fill an answer'
-    //                 }
-    //             })
-    //         }
-    //     })
-    // }
+
+    if (!values.questions || !values.questions.length) {
+        errors.questions = { _error: 'At least one member must be entered' }
+    } else {
+        const questionsArrayErrors = [];
+        values.questions.forEach((question, index) => {
+            const questionErrors = {};
+            if (!question.question || !question.question.length) {
+                questionErrors.question = 'Required';
+                questionsArrayErrors[index] = questionErrors
+            }
+
+            if (question && question.answers && question.answers.length) {
+                const answerArrayErrors = [];
+                question.answers.forEach((answer, answerIndex) => {
+                    if (!answer || !answer.length) {
+                        answerArrayErrors[answerIndex] = 'Required'
+                    }
+                });
+                if (answerArrayErrors.length) {
+                    questionErrors.answers = answerArrayErrors;
+                    questionsArrayErrors[index] = questionErrors
+                }
+
+            }
+        });
+        if (questionsArrayErrors.length) {
+            errors.questions = questionsArrayErrors
+        }
+    }
+
     return errors
 };
 

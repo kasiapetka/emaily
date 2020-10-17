@@ -1,3 +1,5 @@
+@import "../../styles/Variables";
+
 .dashboard {
   text-align: left;
 
@@ -9,6 +11,14 @@
   }
   .fixed-action-btn{
     z-index: 300;
+  }
+  &_navigation{
+    &_item{
+      cursor: pointer;
+      border: 1px solid $border-grey;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
   }
 }
 

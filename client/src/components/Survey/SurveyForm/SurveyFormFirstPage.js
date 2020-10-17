@@ -9,7 +9,7 @@ import * as actions from "../../../store/actions";
 import SurveyFormSuccess from "./SurveyFormSuccess";
 
 const renderError = ({meta: {touched, error}}) =>
-    touched && error ? <span style={{color: '#b71c1c'}}>{error}</span> : false;
+    touched && error ? <span className="validation-message">{error}</span> : false;
 
 class SurveyFormFirstPage extends Component {
 
@@ -27,7 +27,6 @@ class SurveyFormFirstPage extends Component {
                            component={SurveyField}
                            type="number"
                            label="Set limit for the number of replies"
-                           value={20}
                     />
                 </div>
             )

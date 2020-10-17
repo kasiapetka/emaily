@@ -9,6 +9,7 @@ import Spinner from "../../UI/Spinner/Spinner";
 import {RiCheckFill} from "react-icons/ri";
 import SurveyFormSuccess from "../SurveyForm/SurveyFormSuccess";
 import SurveyFillLogin from "./SurveyFillLogin/SurveyFillLogin";
+import SurveyFull from "./SurveyFull";
 
 class SurveyFill extends Component {
 
@@ -65,7 +66,7 @@ class SurveyFill extends Component {
         if(this.props.error === 401){
             content = <SurveyFillLogin surveyId ={this.props.match.params.surveyId}/>
         }else if(this.props.error === 409){
-            content = <p>The survey is full!</p>
+            content = <SurveyFull/>
         }else if(this.props.loading || !this.props.survey.questions){
             content = <Spinner/>
         }else if (!this.props.surveyRepliedSuccess) {

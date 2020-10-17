@@ -28,15 +28,13 @@ module.exports = app => {
     app.get('/api/current_user',
         (req, res) => {
             res.send(req.user);
-        })
+        });
 
     app.post('/api/surveys/:surveyId', jsonParser,async (req, res) => {
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');
         try {
             const password = req.body.password;
-            console.log(req.body)
-
             //Check if password is given
             if(!password) return res.status(400).send("Give password!");
 

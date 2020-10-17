@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { reduxForm} from "redux-form";
+import {getFormValues, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import * as actions from "../../../store/actions";
 import {RiCheckFill} from "react-icons/ri";
@@ -83,6 +83,7 @@ class SurveyFormThirdPage extends Component {
     };
 
     render() {
+        console.log(this.props.values)
         return (
             <div className="bg bg-secondary">
                 <div className="container">
@@ -92,7 +93,7 @@ class SurveyFormThirdPage extends Component {
                             <div className="flex flex-justify-between buttons">
                                 <button onClick={this.props.previousPage} className="btn large red darken-4">Back
                                 </button>
-                                <button type="submit" className="btn large indigo darken-4">Next <RiCheckFill/>
+                                <button type="submit" className="btn large indigo darken-4" disabled={!this.props.values.questions}>Next <RiCheckFill/>
                                 </button>
                             </div>
                         </form>
@@ -103,6 +104,9 @@ class SurveyFormThirdPage extends Component {
     }
 }
 
+SurveyFormThirdPage = connect(state => ({
+    values: getFormValues('surveyForm')(state),
+}))(SurveyFormThirdPage);
 
 export default reduxForm({
     form: 'surveyForm',

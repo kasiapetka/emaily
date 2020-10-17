@@ -8,6 +8,8 @@ export default ({ input, label, placeholder, disabled, type, meta: { touched, er
             <div style={{position:'relative'}}>
                 <input {...input} placeholder={placeholder} disabled={disabled} type={type} className={(touched && error) ? "error" : ""}/>
                 {touched && error && <Warning className="error-icon"/>}
+                {touched && error && <p className="validation-message">{error}</p>}
+
             </div>
         </div>
     );

@@ -1,3 +1,4 @@
+@import "Variables";
 
 /* label color */
 .survey-field label {
@@ -21,7 +22,7 @@
 .survey-field input[type=number],
 .survey-field input[type=search],
 .survey-field textarea.materialize-textarea {
-  border: 1px solid #e0e0e0;
+  border: 1px solid $border-grey;
   border-radius: 5px;
   box-sizing: border-box;
   padding-left: 10px;
@@ -42,8 +43,8 @@
 .survey-field input[type=number]:not(.browser-default):focus:not([readonly]),
 .survey-field input[type=search]:not(.browser-default):focus:not([readonly]),
 .survey-field textarea.materialize-textarea:focus:not([readonly]) {
-  border: 1px solid rgba(26,35,126,0.7);
-  box-shadow: 0 0 5px 0  rgba(26,35,126,0.7);
+  border: 1px solid $primary-blue-semi;
+  box-shadow: 0 0 5px 0 $primary-blue-semi;
   outline: 0;
 }
 /* label underline focus color */
