@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as actions from "../../../store/actions";
 import Surveys from "./Surveys";
+import Spinner from "../../UI/Spinner/Spinner";
 
 
 class SurveyList extends Component {
@@ -11,9 +12,9 @@ class SurveyList extends Component {
     }
 
     render() {
-        console.log(this.props.surveys)
-
-        return (
+        if(this.props.loading) {
+            return <Spinner/>;
+        } else return (
             <div className="bg bg-secondary">
                 <div className="container">
                     <div className="survey row">
