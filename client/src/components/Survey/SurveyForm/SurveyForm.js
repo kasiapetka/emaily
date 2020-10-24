@@ -52,10 +52,9 @@ class SurveyForm extends Component {
     }
 }
 
-function mapStateToProps({survey, question}) {
+function mapStateToProps({survey}) {
     return {
         currentPage: survey.currentPage,
-        questions: question.questions,
         loading: survey.loading,
         error: survey.error,
     };

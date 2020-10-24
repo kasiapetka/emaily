@@ -7,7 +7,7 @@ import {RiCheckFill} from "react-icons/ri";
 
 class SurveyFillLogin extends Component {
     render() {
-        return (
+       return (
             <div className="bg bg-secondary">
                 <div className="container">
                     <div className="survey row">
@@ -21,6 +21,7 @@ class SurveyFillLogin extends Component {
                                 <button type="submit" className="btn large indigo darken-4">Login <RiCheckFill/>
                                 </button>
                             </form>
+                            {this.props.error === 400 ? <p className="red-text">Wrong password! </p>: null}
                         </div>
                     </div>
                 </div>
@@ -29,6 +30,12 @@ class SurveyFillLogin extends Component {
     }
 }
 
+function mapStateToProps({survey}) {
+    return {
+        error: survey.error,
+    };
+}
+
 export default reduxForm({
     form: 'surveyFillLogin',
-})(connect(null, actions)(SurveyFillLogin));
+})(connect(mapStateToProps, actions)(SurveyFillLogin));

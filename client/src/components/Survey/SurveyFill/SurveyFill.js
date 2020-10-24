@@ -10,6 +10,7 @@ import {RiCheckFill} from "react-icons/ri";
 import SurveyFormSuccess from "../SurveyForm/SurveyFormSuccess";
 import SurveyFillLogin from "./SurveyFillLogin/SurveyFillLogin";
 import SurveyFull from "./SurveyFull";
+import ErrorMessage from "../../ErrorMessage";
 
 class SurveyFill extends Component {
 
@@ -63,10 +64,12 @@ class SurveyFill extends Component {
 
     render() {
         let content;
-        if(this.props.error === 401){
+        if(this.props.error === 401 || this.props.error === 400){
             content = <SurveyFillLogin surveyId ={this.props.match.params.surveyId}/>
         }else if(this.props.error === 409){
             content = <SurveyFull/>
+        }else if(this.props.error === 404){
+            content = <ErrorMessage/>
         }else if(this.props.loading || !this.props.survey.questions){
             content = <Spinner/>
         }else if (!this.props.surveyRepliedSuccess) {

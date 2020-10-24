@@ -21,7 +21,7 @@ class Dashboard extends Component {
                         <div className="row">
                             <ul className="dashboard_navigation col s5">
                                 <li className="dashboard_navigation_item z-depth-1 flex flex-middle">
-                                    <Link to="/"
+                                    <Link to="/surveys/list"
                                           className="flex flex-middle black-text">
                                         <List/>
                                         <span style={{paddingLeft: '15px'}}>Show my surveys.</span>

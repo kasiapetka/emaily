@@ -9,6 +9,8 @@ import * as actions from '../store/actions';
 import SurveyForm from "./Survey/SurveyForm/SurveyForm";
 import SurveyFill from "./Survey/SurveyFill/SurveyFill";
 import PrivateRoute from './privateRoute';
+import SurveyList from "./Survey/SurveyList/SurveyList";
+import Spinner from "./UI/Spinner/Spinner";
 
 class App extends Component {
 
@@ -17,23 +19,31 @@ class App extends Component {
     }
 
     render() {
-        return (
-            <Router>
+
+        let content =  <Spinner/>;
+        if(this.props.auth !== null)
+            content =   <Router>
                 <React.Fragment>
                     <Header/>
                     <div>
                         <Switch>
                             <Route path='/' exact component={Landing}/>
-                            <PrivateRoute path='/surveys' exact component={Dashboard}/>
-                            <PrivateRoute path='/surveys/new' component={SurveyForm}/>
+                            <PrivateRoute path='/surveys' exact component={Dashboard} auth={this.props.auth}/>
+                            <PrivateRoute path='/surveys/new' exact component={SurveyForm} auth={this.props.auth}/>
+                            <PrivateRoute path='/surveys/list' exact component={SurveyList} auth={this.props.auth}/>
                             <Route path='/surveys/:surveyId' component={SurveyFill}/>
                             <Route path='/' component={ErrorMessage}/>
                         </Switch>
                     </div>
                 </React.Fragment>
-            </Router>
-        );
+            </Router>;
+
+        return content;
     }
 }
 
-export default connect(null, actions)(App);
+function mapStateToProps({auth}) {
+    return {auth};
+}
+
+export default connect(mapStateToProps, actions)(App);

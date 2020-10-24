@@ -11,8 +11,8 @@ module.exports = app => {
     app.post('/api/surveys', requireLogin, jsonParser, async (req, res) => {
         const {password, limit, title, subject, body, questions} = req.body;
         let pass;
-        if(password === "true")
-        pass = Math.random().toString(36).slice(-10);
+        if (password === "true")
+            pass = Math.random().toString(36).slice(-10);
 
         const survey = new Survey({
             password: pass,
@@ -40,11 +40,11 @@ module.exports = app => {
         }
     });
 
-    app.get('/api/surveys/:surveyId',requireSurveyPassword, jsonParser, async (req, res) => {
+    app.get('/api/surveys/:surveyId', requireSurveyPassword, jsonParser, async (req, res) => {
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');
         try {
-            const {limit, title, subject, body, questions,dateSend, replies} = await Survey.findOne({_id: id});
+            const {limit, title, subject, body, questions, dateSend, repliesCount} = await Survey.findOne({_id: id});
             const survey = {
                 limit,
                 title,
@@ -54,9 +54,9 @@ module.exports = app => {
                 dateSend,
             };
 
-            if(replies && survey.limit === replies.length){
+            if (survey.limit === repliesCount) {
                 res.status(409).send();
-            }else{
+            } else {
                 res.status(200).send(survey);
             }
         } catch (err) {
@@ -64,13 +64,29 @@ module.exports = app => {
         }
     });
 
-    app.post('/api/surveys/reply/:surveyId',requireSurveyPassword, jsonParser, async (req, res) => {
+    app.post('/api/surveys/reply/:surveyId', requireSurveyPassword, jsonParser, async (req, res) => {
         const reply = req.body;
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');
         try {
-            await Survey.update({_id: id},{$push:{replies:reply}, $set: { lastResponded: Date.now() }});
+            const {repliesCount} = await Survey.findOne({_id: id});
+            await Survey.update({_id: id}, {
+                $push: {replies: reply},
+                $set: {lastResponded: Date.now(), repliesCount: repliesCount + 1}
+            });
             res.status(200).send('oki');
+        } catch (err) {
+            res.status(422).send(err);
+        }
+    });
+
+    app.get('/api/surveys', requireLogin, jsonParser, async (req, res) => {
+        let user = req.user.id;
+        try {
+            const surveys = await Survey.find({_user: user}).select({
+                replies: false
+            });
+            res.status(200).send(surveys);
         } catch (err) {
             res.status(422).send(err);
         }

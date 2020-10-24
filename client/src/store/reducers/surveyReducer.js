@@ -3,6 +3,7 @@ import {
     GO_TO_PREV_PAGE,
     CREATE_SURVEY,
     FETCH_SURVEY,
+    FETCH_SURVEYS,
     ADD_REPLY,
     SURVEY_FAILED,
     LOADING_START,
@@ -21,6 +22,7 @@ const PAGES =  [
 const initialState = {
     currentPage: PAGES[0],
     survey: null,
+    surveys: null,
     error: null,
     loading: false,
     surveyCreatedSuccess: false,
@@ -47,6 +49,15 @@ const surveyReducer = (state = initialState, action) => {
                     ...action.payload,
                 },
                 surveyRepliedSuccess: false,
+                loading: false,
+            };
+        case FETCH_SURVEYS:
+            console.log(action.payload);
+            return{
+                ...state,
+                surveys: [
+                    ...action.payload,
+                ],
                 loading: false,
             };
         case CREATE_INIT:

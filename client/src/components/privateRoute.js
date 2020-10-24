@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import {connect} from "react-redux";
 
 const privateRoute = ({component: Component, auth, ...rest }) => {
     return (
@@ -26,8 +25,4 @@ const privateRoute = ({component: Component, auth, ...rest }) => {
     );
 };
 
-function mapStateToProps({auth}) {
-    return {auth};
-}
-
-export default connect(mapStateToProps)(privateRoute);
+export default privateRoute;
