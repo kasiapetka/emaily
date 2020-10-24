@@ -11,7 +11,10 @@ const formatDate = (date) => {
 const Subject = (props) => {
     return (
         <div className="survey-list">
-            <h5>Title: {props.title}</h5>
+            <div className="flex flex-justify-between">
+                <h5 style={{margin:'0'}}>Title: {props.title}</h5>
+                <button className="btn btn-small indigo darken-4">See more</button>
+            </div>
             <h6>Subject: {props.subject}</h6>
             <h6>Body: {props.body}</h6>
             <div className="flex flex-justify-between">
@@ -41,13 +44,7 @@ const Subject = (props) => {
                     <div className="flex flex-column">
                         <span style={{fontWeight: 'bold'}}>Link:</span>
                         <Link to={"/surveys/" + props.URL}>
-                            <span style={{
-                                marginTop: 0,
-                                maxWidth: '90vw',
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis'
-                            }}>
+                            <span>
                                 Here
                             </span>
                         </Link>

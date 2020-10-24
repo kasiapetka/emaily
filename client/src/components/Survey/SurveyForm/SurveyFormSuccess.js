@@ -1,5 +1,5 @@
 import React from "react";
-import {RiEdit2Fill as Fill, RiCheckboxCircleFill as Success} from "react-icons/ri"
+import { RiCheckboxCircleFill as Success} from "react-icons/ri"
 import {Link} from "react-router-dom";
 
 export default (props) => {

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Field} from "redux-form";
 import SurveyField from "../SurveyField/SurveyField";
-import QuestionABC from "./QuestionABC";
 
 const QuestionOpen =({index, removeQuestion,fields, question})=> {
         return (

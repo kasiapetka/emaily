@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import * as actions from "../../../store/actions";
-import {FieldArray, getFormValues, reduxForm} from "redux-form";
+import {getFormValues, reduxForm} from "redux-form";
 import AnswerOpen from "./AnswerTypes/AnswerOpen";
 import AnswerABC from "./AnswerTypes/AnswerABC";
 import AnswerDropdown from "./AnswerTypes/AnswerDropdown";
