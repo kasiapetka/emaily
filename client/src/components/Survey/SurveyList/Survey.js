@@ -13,7 +13,9 @@ const Subject = (props) => {
         <div className="survey-list">
             <div className="flex flex-justify-between">
                 <h5 style={{margin:'0'}}>Title: {props.title}</h5>
-                <button className="btn btn-small indigo darken-4">See more</button>
+                <Link to={"/surveys/list/" + props.URL}>
+                    <button className="btn btn-small indigo darken-4">See more</button>
+                </Link>
             </div>
             <h6>Subject: {props.subject}</h6>
             <h6>Body: {props.body}</h6>

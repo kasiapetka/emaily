@@ -8,7 +8,7 @@ import {
     SURVEY_FAILED,
     LOADING_START,
     CREATE_INIT,
-    SURVEY_FILL_LOGIN
+    SURVEY_FILL_LOGIN, FETCH_REPLIES
 } from "../actions/types";
 
 const PAGES =  [
@@ -23,6 +23,7 @@ const initialState = {
     currentPage: PAGES[0],
     survey: null,
     surveys: null,
+    replies: null,
     error: null,
     loading: false,
     surveyCreatedSuccess: false,
@@ -52,11 +53,18 @@ const surveyReducer = (state = initialState, action) => {
                 loading: false,
             };
         case FETCH_SURVEYS:
-            console.log(action.payload);
             return{
                 ...state,
                 surveys: [
                     ...action.payload,
+                ],
+                loading: false,
+            };
+        case FETCH_REPLIES:
+            return{
+                ...state,
+                replies: [
+                    ...action.payload
                 ],
                 loading: false,
             };

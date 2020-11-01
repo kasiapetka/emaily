@@ -6,17 +6,15 @@ import * as actions from "../../store/actions";
 import {RiUserShared2Fill as Logout, RiFileListFill as List, RiAddLine as Plus} from "react-icons/ri";
 
 class Dashboard extends Component {
-    componentDidMount() {
-      //  this.props.createInit();
-    }
-
-    render(){
+    render() {
         return (
             <React.Fragment>
                 <div className="bg bg-primary">
                     <div className="container dashboard">
                         <div className="dashboard_space"></div>
                         <h2>Dashboard</h2>
+                        <hr/>
+                        <h5>Hello {this.props.auth.name}! Your email is: {this.props.auth.email}.</h5>
                         <h5>What do You want to do now?</h5>
                         <div className="row">
                             <ul className="dashboard_navigation col s5">
@@ -43,7 +41,7 @@ class Dashboard extends Component {
                             </ul>
                         </div>
 
-                        <div className="fixed-action-btn" style={{bottom: '50px', right:'50px'}}>
+                        <div className="fixed-action-btn" style={{bottom: '50px', right: '50px'}}>
                             <Link to="/surveys/new"
                                   className="btn-floating btn-large waves-effect waves-light red">
                         <span
@@ -55,6 +53,10 @@ class Dashboard extends Component {
             </React.Fragment>
         );
     }
-};
+}
 
-export default (connect(null, actions)(Dashboard));
+function mapStateToProps({auth}) {
+    return {auth};
+}
+
+export default (connect(mapStateToProps, actions)(Dashboard));

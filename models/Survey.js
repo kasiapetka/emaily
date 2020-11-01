@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
-const RecipientSchema = require('./Recipient');
 const QuestionSchema = require('./Question');
 
 const surveySchema = new Schema({
@@ -9,8 +8,7 @@ const surveySchema = new Schema({
     title: String,
     subject: String,
     body: String,
-    recipients: [RecipientSchema],
-    replies: [],
+    _reply: {type: Schema.Types.ObjectId, ref: 'Reply'},
     repliesCount: { type: Number, default: 0},
     questions: [QuestionSchema],
     _user: {type: Schema.Types.ObjectId, ref: 'User'},

@@ -5,6 +5,7 @@ import {
     FETCH_SURVEY,
     ADD_REPLY,
     SURVEY_FAILED,
+    FETCH_REPLIES,
     LOADING_START,
     FETCH_SURVEYS,
     CREATE_INIT,
@@ -68,6 +69,16 @@ export const fetchSurveys =()=>
         }
     };
 
+export const fetchReplies =(id)=>
+async dispatch => {
+    dispatch({type: LOADING_START});
+    try {
+        const res = await axios.get('/api/surveys/reply/'+id);
+        dispatch({type: FETCH_REPLIES, payload: res.data});
+    } catch (error) {
+        dispatch({type: SURVEY_FAILED, error: error});
+    }
+};
 
 export const createSurvey =(values)=>
     async dispatch => {
@@ -76,7 +87,7 @@ export const createSurvey =(values)=>
             const res = await axios.post('/api/surveys', values);
             dispatch({type: CREATE_SURVEY, payload: res.data});
         } catch (error) {
-            dispatch({type: SURVEY_FAILED, error: error});
+            dispatch({type: SURVEY_FAILED, error: error.response.status});
         }
     };
 

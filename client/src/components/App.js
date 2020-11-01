@@ -11,6 +11,7 @@ import SurveyFill from "./Survey/SurveyFill/SurveyFill";
 import PrivateRoute from './privateRoute';
 import SurveyList from "./Survey/SurveyList/SurveyList";
 import Spinner from "./UI/Spinner/Spinner";
+import SurveyReplies from "./Survey/SurveyList/SurveyReplies";
 
 class App extends Component {
 
@@ -19,7 +20,6 @@ class App extends Component {
     }
 
     render() {
-
         let content =  <Spinner/>;
         if(this.props.auth !== null)
             content =   <Router>
@@ -27,10 +27,11 @@ class App extends Component {
                     <Header/>
                     <div>
                         <Switch>
-                            <Route path='/' exact component={Landing}/>
+                            <Route path='/' exact component={()=><Landing auth={this.props.auth}/>}/>
                             <PrivateRoute path='/surveys' exact component={Dashboard} auth={this.props.auth}/>
                             <PrivateRoute path='/surveys/new' exact component={SurveyForm} auth={this.props.auth}/>
                             <PrivateRoute path='/surveys/list' exact component={SurveyList} auth={this.props.auth}/>
+                            <PrivateRoute path='/surveys/list/:surveyId' exact component={SurveyReplies} auth={this.props.auth}/>
                             <Route path='/surveys/:surveyId' component={SurveyFill}/>
                             <Route path='/' component={ErrorMessage}/>
                         </Switch>

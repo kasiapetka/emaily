@@ -41,7 +41,7 @@ const AnswerABC = ({questionIndex, question, id, answers, values}) => {
                 <div className="flex flex-column row">
                     <div className="col s11 survey-field">
                         {
-                            id === 2
+                            id === 1
                                 ?
                                 renderRadioOptions({answers, questionIndex, values})
                                 :

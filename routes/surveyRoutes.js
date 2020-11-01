@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const requireSurveyPassword = require('../middlewares/requireSurveyPassword');
 const Survey = mongoose.model('surveys');
+const Reply = mongoose.model('replies');
 const bodyParser = require('body-parser');
 
 // create application/json parser
@@ -14,6 +15,7 @@ module.exports = app => {
         if (password === "true")
             pass = Math.random().toString(36).slice(-10);
 
+        console.log(req.user)
         const survey = new Survey({
             password: pass,
             limit: parseInt(limit, 10),
@@ -33,7 +35,19 @@ module.exports = app => {
         survey.URL = buff.toString('base64');
 
         try {
-            await survey.save();
+            const reply = new Reply(
+            //     {
+            //     replies: questions.map(({answers, id}) => ({
+            //         answers: answers,
+            //         id: id
+            //     })),
+            // }
+            );
+            await reply.save(function (err, reply) {
+                survey._reply = reply.id;
+                survey.save();
+            });
+
             res.status(200).send({URL: survey.URL, password: survey.password});
         } catch (err) {
             res.status(422).send(err);
@@ -69,12 +83,38 @@ module.exports = app => {
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');
         try {
-            const {repliesCount} = await Survey.findOne({_id: id});
+            const {repliesCount, _reply} = await Survey.findOne({_id: id});
             await Survey.update({_id: id}, {
-                $push: {replies: reply},
                 $set: {lastResponded: Date.now(), repliesCount: repliesCount + 1}
             });
+
+            await Reply.update({_id: _reply}, {
+                $push: {replies: reply},
+            });
+
             res.status(200).send('oki');
+        } catch (err) {
+            res.status(422).send(err);
+        }
+    });
+
+    app.get('/api/surveys/reply/:surveyId', requireLogin, jsonParser, async (req, res) => {
+        const buff = Buffer.from(req.params.surveyId, 'base64');
+        const id = buff.toString('utf-8');
+        try {
+            const {_reply, questions} = await Survey.findOne({_id: id});
+
+            const {replies} = await Reply.findOne({_id: _reply});
+            const fullReplies=[];
+
+            questions.map((question, index) => {
+                fullReplies.push({
+                    answers: replies[index],
+                    id: question.id
+                })
+            });
+
+            res.status(200).send(fullReplies);
         } catch (err) {
             res.status(422).send(err);
         }
@@ -84,7 +124,7 @@ module.exports = app => {
         let user = req.user.id;
         try {
             const surveys = await Survey.find({_user: user}).select({
-                replies: false
+                questions: false
             });
             res.status(200).send(surveys);
         } catch (err) {
