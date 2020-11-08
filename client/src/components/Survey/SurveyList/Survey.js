@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import {RiCheckDoubleFill as Full} from 'react-icons/ri'
 
 const formatDate = (date) => {
     if (date) {
@@ -9,10 +10,15 @@ const formatDate = (date) => {
 };
 
 const Subject = (props) => {
+    let title = <h5 style={{margin:'0'}}>Title: {props.title}</h5>;
+    if(props.limit === props.repliesCount){
+        title = <h5 style={{margin:'0'}} className="green-text text-darken-1">Title: {props.title} <Full/></h5>;
+    }
+
     return (
         <div className="survey-list">
             <div className="flex flex-justify-between">
-                <h5 style={{margin:'0'}}>Title: {props.title}</h5>
+                {title}
                 <Link to={"/surveys/list/" + props.URL}>
                     <button className="btn btn-small indigo darken-4">See more</button>
                 </Link>
