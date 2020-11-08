@@ -14,8 +14,6 @@ module.exports = app => {
         let pass;
         if (password === "true")
             pass = Math.random().toString(36).slice(-10);
-
-        console.log(req.user)
         const survey = new Survey({
             password: pass,
             limit: parseInt(limit, 10),
@@ -36,12 +34,25 @@ module.exports = app => {
 
         try {
             const reply = new Reply(
-            //     {
-            //     replies: questions.map(({answers, id}) => ({
-            //         answers: answers,
-            //         id: id
-            //     })),
-            // }
+                {
+                replies: questions.map(({answers, id,question}) => {
+                    if(id === 0) {
+                        return {
+                            id: id,
+                            question: question,
+                            values: []
+                        }
+                    } else {  return {
+                        answers: answers.map(a =>({
+                                    value: a,
+                                    count: 0
+                                })
+                        ),
+                        id: id,
+                        question: question
+                    }}
+                }),
+            }
             );
             await reply.save(function (err, reply) {
                 survey._reply = reply.id;
@@ -83,13 +94,32 @@ module.exports = app => {
         const buff = Buffer.from(req.params.surveyId, 'base64');
         const id = buff.toString('utf-8');
         try {
-            const {repliesCount, _reply} = await Survey.findOne({_id: id});
+
+            const {repliesCount, _reply, questions} = await Survey.findOne({_id: id});
+            const {replies} = await Reply.findOne({_id: _reply});
+            const questionIds = [];
+            questions.map(q => questionIds.push(q.id));
+
+            reply.answers.map( (a, index) => {
+                if(questionIds[index] === 0){
+                    replies[index].values.push(a);
+                } else if (questionIds[index] === 2){
+                    a.answer.map((b,i) => {
+                        if(b){
+                            return replies[index].answers[i].count = replies[index].answers[i].count + 1;
+                        }
+                    })
+                } else {
+                    return replies[index].answers[+a].count = replies[index].answers[+a].count + 1;
+                }
+            });
+
             await Survey.update({_id: id}, {
                 $set: {lastResponded: Date.now(), repliesCount: repliesCount + 1}
             });
 
             await Reply.update({_id: _reply}, {
-                $push: {replies: reply},
+                $set: {replies: replies},
             });
 
             res.status(200).send('oki');

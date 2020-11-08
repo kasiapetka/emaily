@@ -10,23 +10,24 @@ class SurveyReplies extends Component {
         this.props.fetchReplies(this.props.match.params.surveyId);
     }
 
-    renderCharts =()=>  {
+    renderCharts = () => {
         return this.props.replies.map((reply, index) => {
-            switch (reply.id) {
-                case 0:
-                    return <BarChart/>;
-                case 1:
-                    return <p>1</p>;
-                case 2:
-                    return <p>2</p>;
-                case 3:
-                    return <p>3</p>
+            if (reply.id === 0) {
+                return <React.Fragment>
+                    <h5>{reply.answers.question}</h5>
+                    <ul key={reply.id}>{reply.answers.values.map(a => <li>{a}</li>)}</ul>
+                </React.Fragment>
+            } else {
+                return <React.Fragment>
+                    <h5>{reply.answers.question}</h5>
+                    <BarChart key={reply.id} answers={reply.answers.answers}/>
+                </React.Fragment>
             }
         })
     };
 
     render() {
-        if(this.props.replies) {
+        if (this.props.replies) {
             return <div>
                 {this.renderCharts()}
             </div>;
@@ -43,6 +44,6 @@ function mapStateToProps({survey}) {
 }
 
 export default connect(
-    mapStateToProps,actions
+    mapStateToProps, actions
 )(SurveyReplies);
 

@@ -1,16 +1,18 @@
 import React from 'react'
 import { Chart } from 'react-charts'
 
-const BarChart =()=> {
+const BarChart =({answers})=> {
+    const d = answers.map(a => [a.value, a.count]);
+    console.log(d)
+
     const data = React.useMemo(
         () => [
             {
-                data: [['A', 1], ['V', 2], ['B', 4], ['N', 2], ['F', 7]]
+                data: [...d]
             }
         ],
         []
     )
-
     const axes = React.useMemo(
         () => [
             { primary: true, type: 'ordinal', position: 'bottom' },
@@ -30,7 +32,7 @@ const BarChart =()=> {
         <div
             style={{
                 width: '400px',
-                height: '300px'
+                height: '300px',
             }}
         >
             <Chart data={data} series={series} axes={axes} />
