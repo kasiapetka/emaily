@@ -70,7 +70,7 @@
   padding: 20px 10px !important;
 }
 
-.survey-list{
+.survey-list, .reply{
   border-bottom: 1px solid $primary-yellow !important;
   border-top: 1px solid $primary-yellow !important;
   padding: 20px 10px !important;
@@ -84,6 +84,11 @@
   margin-top: 5vw;
   border: 2px dashed $primary-blue;
   padding: 20px 10px 50px;
+}
+
+.open-question-list{
+  max-height: 250px;
+  overflow-y: auto;
 }
 
 @media (max-width: 426px) {
