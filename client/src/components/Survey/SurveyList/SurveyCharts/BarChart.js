@@ -3,7 +3,6 @@ import { Chart } from 'react-charts'
 
 const BarChart =({answers})=> {
     const d = answers.map(a => [a.value, a.count]);
-    console.log(d)
 
     const data = React.useMemo(
         () => [
@@ -16,7 +15,7 @@ const BarChart =({answers})=> {
     const axes = React.useMemo(
         () => [
             { primary: true, type: 'ordinal', position: 'bottom' },
-            { position: 'left', type: 'linear', stacked: false }
+            { position: 'left', type: 'linear', stacked: false },
         ],
         []
     );
@@ -26,16 +25,23 @@ const BarChart =({answers})=> {
         }),
         []
     );
+
+    const getSeriesStyle = React.useCallback((series) => {
+        return {
+            fill: "rgba(26,35,126,0.8)",
+        };
+    }, []);
+
   return (
         // A react-chart hyper-responsively and continuously fills the available
         // space of its parent element automatically
         <div
             style={{
-                width: '400px',
+                width: '100%',
                 height: '300px',
             }}
         >
-            <Chart data={data} series={series} axes={axes} />
+            <Chart data={data} series={series} axes={axes} getSeriesStyle={getSeriesStyle} tooltip secondaryCursor/>
         </div>
     )
 };
