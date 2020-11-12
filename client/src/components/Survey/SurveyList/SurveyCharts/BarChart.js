@@ -39,6 +39,8 @@ const BarChart =({answers})=> {
             style={{
                 width: '100%',
                 height: '300px',
+                maxWidth: '600px',
+                margin: 'auto'
             }}
         >
             <Chart data={data} series={series} axes={axes} getSeriesStyle={getSeriesStyle} tooltip secondaryCursor/>

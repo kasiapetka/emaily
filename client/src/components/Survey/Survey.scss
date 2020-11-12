@@ -76,6 +76,21 @@
   padding: 20px 10px !important;
   margin-top: 3px;
 }
+
+.donut{
+  padding: 20px 10px !important;
+  margin-top: 3px;
+}
+
+.chart{
+  svg{
+    width: 100%;
+  }
+  text{
+    font-size: 1.5rem;
+  }
+}
+
 .question-fill{
   padding-bottom: 10px;
 }

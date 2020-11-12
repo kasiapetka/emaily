@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import * as actions from "../../../store/actions";
 import Spinner from "../../UI/Spinner/Spinner";
 import BarChart from "./SurveyCharts/BarChart";
+import DonutChart from "./SurveyCharts/DonutChart";
 
 
 class SurveyReplies extends Component {
@@ -13,14 +14,26 @@ class SurveyReplies extends Component {
     renderCharts = () => {
         return this.props.replies.map((reply, index) => {
             if (reply.id === 0) {
-                return <div className="reply">
-                    <h5 style={{marginBottom: '1.5rem'}}>{index+1}. {reply.answers.question}</h5>
-                    <ul className="collection" key={reply.id}>{reply.answers.values.map(a => <li className="collection-item">{a}</li>)}</ul>
+                return <div className="row">
+                    <div key={index} className="col l7 m8 s12" style={{marginTop: '15px'}}>
+                        <div className="reply">
+                            <h5 style={{marginBottom: '1.5rem'}}>{index + 1}. {reply.answers.question}</h5>
+                            <ul className="collection">{reply.answers.values.map((a,i) => a ? <li key={i}
+                                                                                              className="collection-item" >{a}</li> : null)}</ul>
+                        </div>
+                    </div>
                 </div>
             } else {
-                return <div className="reply">
-                    <h5 style={{marginBottom: '1.5rem'}}>{index+1}. {reply.answers.question}</h5>
-                    <BarChart key={reply.id} answers={reply.answers.answers}/>
+                return <div className="row" key={index}>
+                    <div  className="col l7 m8 s12">
+                        <div className="reply">
+                            <h5 style={{marginBottom: '1.5rem'}}>{index + 1}. {reply.answers.question}</h5>
+                            <BarChart key={reply.id} answers={reply.answers.answers}/>
+                        </div>
+                    </div>
+                    <div className="col l5 m4 s12 h-100">
+                        <DonutChart answers={reply.answers.answers}/>
+                    </div>
                 </div>
             }
         })
@@ -30,10 +43,8 @@ class SurveyReplies extends Component {
         if (this.props.replies) {
             return <div className="bg bg-secondary">
                 <div className="container">
-                    <div className="survey row">
-                        <div className="col l8 m9 s12" style={{marginTop: '15px'}}>
-                            {this.renderCharts()}
-                        </div>
+                    <div className="survey" style={{marginTop: '15px'}}>
+                        {this.renderCharts()}
                     </div>
                 </div>
             </div>;
