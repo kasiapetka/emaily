@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Field, getFormValues, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import * as actions from "../../../store/actions";
 import {RiCheckFill} from "react-icons/ri";
 import validate from "./validate";
 
-class SurveyFormLastPage extends Component {
-    renderQuestions = () => {
-        return this.props.values.questions?.map((question, index) => {
+const SurveyFormLastPage = props => {
+
+    const renderQuestions = () => {
+        return props.values.questions?.map((question, index) => {
             let answers;
             if (question.id === 0) {
                 answers = <textarea disabled value="Space for answer." style={{height: '5rem'}}>
@@ -45,49 +46,44 @@ class SurveyFormLastPage extends Component {
         })
     };
 
-    onSubmit = (values) => {
-        this.props.onSubmit(values);
-        this.props.reset()
+    const onSubmit = (values) => {
+        props.onSubmit(values);
+        props.reset()
     };
 
-    render() {
-        return <div className="bg bg-secondary">
-            <div className="container">
-                <div className="survey row">
-                    <div className="col m8 s12">
-                        <form onSubmit={this.props.handleSubmit((values) => this.onSubmit(values))}>
-                            <h5>Title: {this.props.values.title}</h5>
-                            <h6>Subject: {this.props.values.subject}</h6>
-                            <h6>Body: {this.props.values.body}</h6>
-                            <p style={{marginBottom: "0", display: "inline-block"}}>Limit of replies: for Your
-                                survey:</p>
-                            <h6 style={{display: "inline-block"}}>{this.props.values.limit}</h6>
-                            <p style={{marginTop: "0"}}>Your
-                                survey {this.props.values.password === "false" ? "has no" : "has"} password.</p>
-                            {this.renderQuestions()}
-                            <div className="flex flex-justify-between buttons">
-                                <button onClick={this.props.previousPage} className="btn large red darken-4">Back
-                                </button>
-                                <button type="submit" className="btn large indigo darken-4">Next <RiCheckFill/>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+    return <div className="bg bg-secondary">
+        <div className="container">
+            <div className="survey row">
+                <div className="col m8 s12">
+                    <form onSubmit={props.handleSubmit((values) => onSubmit(values))}>
+                        <h5>Title: {props.values.title}</h5>
+                        <h6>Subject: {props.values.subject}</h6>
+                        <h6>Body: {props.values.body}</h6>
+                        <p style={{marginBottom: "0", display: "inline-block"}}>Limit of replies: for Your
+                            survey:</p>
+                        <h6 style={{display: "inline-block"}}>{props.values.limit}</h6>
+                        <p style={{marginTop: "0"}}>Your
+                            survey {props.values.password === "false" ? "has no" : "has"} password.</p>
+                        {renderQuestions()}
+                        <div className="flex flex-justify-between buttons">
+                            <button onClick={props.previousPage} className="btn large red darken-4">Back
+                            </button>
+                            <button type="submit" className="btn large indigo darken-4">Next <RiCheckFill/>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>;
-    }
-}
-
-
-SurveyFormLastPage = connect(state => ({
-    values: getFormValues('surveyForm')(state),
-}))(SurveyFormLastPage);
+        </div>
+    </div>;
+};
 
 export default reduxForm({
     form: 'surveyForm',
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
     validate
-})(connect(null, actions)(SurveyFormLastPage));
+})(connect(null, actions)(connect(state => ({
+    values: getFormValues('surveyForm')(state),
+}))(SurveyFormLastPage)));
 

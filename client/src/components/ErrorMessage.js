@@ -2,7 +2,6 @@ import React from 'react';
 import {RiErrorWarningFill as Error} from "react-icons/ri";
 import {Link} from "react-router-dom";
 
-
 const ErrorMessage = () => {
     return (
         <div className='flex flex-middle flex-column'>

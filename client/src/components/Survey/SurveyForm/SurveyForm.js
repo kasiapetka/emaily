@@ -6,6 +6,7 @@ import SurveyFormThirdPage from "./SurveyFormThirdPage";
 import * as actions from "../../../store/actions";
 import SurveyFormLastPage from "./SurveyFormLastPage";
 import Spinner from "../../UI/Spinner/Spinner";
+import ErrorMessage from "../../ErrorMessage";
 
 class SurveyForm extends Component {
 
@@ -29,7 +30,7 @@ class SurveyForm extends Component {
                                             onSubmit={this.props.goToNextPage}/>;
             case 3:
                 return <SurveyFormLastPage previousPage={this.props.goToPrevPage}
-                                            onSubmit={this.onSubmit}/>;
+                                           onSubmit={this.onSubmit}/>;
             default:
                 return <p>Error</p>
         }
@@ -38,7 +39,7 @@ class SurveyForm extends Component {
     render() {
         let content;
         if(this.props.error){
-            content = <p>{this.props.error}</p>;
+            content = <ErrorMessage/>;
         }else if(this.props.loading){
             content = <Spinner/>;
         }else{

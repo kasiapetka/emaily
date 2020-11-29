@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {getFormValues, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import * as actions from "../../../store/actions";
@@ -16,8 +16,8 @@ export const QUESTION_TYPES = [
     {id: 3, name: 'dropdown', label: 'Dropdown Question'},
 ];
 
-class SurveyFormThirdPage extends Component {
-    renderQuestionTypes = (fields) => {
+const SurveyFormThirdPage = props => {
+    const renderQuestionTypes = (fields) => {
         return (
             <div className="flex flex-column questions">
                 <p>Add questions to Your survey:</p>
@@ -34,11 +34,11 @@ class SurveyFormThirdPage extends Component {
         );
     };
 
-    removeQuestion = (index, fields) => {
+    const removeQuestion = (index, fields) => {
         fields.remove(index);
     };
 
-    renderQuestions = ({fields, meta: {error, submitFailed}}) => {
+    const renderQuestions = ({fields, meta: {error, submitFailed}}) => {
         return (
             <div className="flex">
                 <div className="col m8 s12 survey-form">
@@ -50,67 +50,63 @@ class SurveyFormThirdPage extends Component {
                                     return <QuestionOpen key={index} index={index}
                                                          fields={fields}
                                                          question={question}
-                                                         removeQuestion={this.removeQuestion}/>;
+                                                         removeQuestion={removeQuestion}/>;
                                 case 1:
                                     return <QuestionABC key={index} index={index}
                                                         fields={fields}
                                                         id={1}
                                                         question={question}
-                                                        removeQuestion={this.removeQuestion}
+                                                        removeQuestion={removeQuestion}
                                     />;
                                 case 2:
                                     return <QuestionABC key={index} index={index}
                                                         fields={fields}
                                                         id={2}
                                                         question={question}
-                                                        removeQuestion={this.removeQuestion}
+                                                        removeQuestion={removeQuestion}
                                     />;
                                 case 3:
                                     return <QuestionDropdown key={index} index={index}
                                                              fields={fields}
                                                              question={question}
-                                                             removeQuestion={this.removeQuestion}
+                                                             removeQuestion={removeQuestion}
                                     />;
                             }
                         })
                     }
                 </div>
                 <div className="col m4 s12">
-                    {this.renderQuestionTypes(fields)}
+                    {renderQuestionTypes(fields)}
                 </div>
             </div>
         );
     };
 
-    render() {
-        return (
-            <div className="bg bg-secondary">
-                <div className="container">
-                    <div className="survey row">
-                        <form onSubmit={this.props.handleSubmit(() => this.props.onSubmit())}>
-                            <FieldArray name="questions" component={this.renderQuestions}/>
-                            <div className="flex flex-justify-between buttons">
-                                <button onClick={this.props.previousPage} className="btn large red darken-4">Back
-                                </button>
-                                <button type="submit" className="btn large indigo darken-4"
-                                        disabled={!this.props.values.questions || this.props.values.questions.length === 0}>Next <RiCheckFill/>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+    return (
+        <div className="bg bg-secondary">
+            <div className="container">
+                <div className="survey row">
+                    <form onSubmit={props.handleSubmit(() => props.onSubmit())}>
+                        <FieldArray name="questions" component={renderQuestions}/>
+                        <div className="flex flex-justify-between buttons">
+                            <button onClick={props.previousPage} className="btn large red darken-4">Back
+                            </button>
+                            <button type="submit" className="btn large indigo darken-4"
+                                    disabled={!props.values.questions || props.values.questions.length === 0}>Next <RiCheckFill/>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        );
-    }
-}
-
-SurveyFormThirdPage = connect(state => ({
-    values: getFormValues('surveyForm')(state),
-}))(SurveyFormThirdPage);
+        </div>
+    );
+};
 
 export default reduxForm({
     form: 'surveyForm',
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
     validate
-})(connect(null, actions)(SurveyFormThirdPage));
+})(connect(null, actions)(connect(state => ({
+    values: getFormValues('surveyForm')(state),
+}))(SurveyFormThirdPage)));

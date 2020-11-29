@@ -11,9 +11,12 @@ import './styles/Element.scss';
 import './styles/Size.scss';
 import './styles/General.scss';
 import './styles/Input.scss';
+import AuthProvider from './context/auth-context'
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 ReactDOM.render(
-    <Provider store={store}> <App/> </Provider>,
+    <Provider store={store}>
+        <AuthProvider><App/> </AuthProvider>
+    </Provider>,
     document.querySelector('#root'));

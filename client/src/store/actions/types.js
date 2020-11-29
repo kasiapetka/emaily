@@ -1,4 +1,3 @@
-export const FETCH_USER = 'FETCH_USER';
 export const SURVEY_FILL_LOGIN='SURVEY_FILL_LOGIN';
 
 export const CREATE_SURVEY='CREATE_SURVEY';
@@ -11,5 +10,6 @@ export const LOADING_START='LOADING_START';
 export const CREATE_INIT='CREATE_INIT';
 export const FETCH_SURVEYS='FETCH_SURVEYS';
 export const FETCH_REPLIES='FETCH_REPLIES';
+export const DELETE_SURVEY='DELETE_SURVEY';
 
 
