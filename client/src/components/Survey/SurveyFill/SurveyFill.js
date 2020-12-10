@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {connect} from "react-redux";
-import * as actions from "../../../store/actions";
 import {getFormValues, reduxForm} from "redux-form";
 import AnswerOpen from "./AnswerTypes/AnswerOpen";
 import AnswerABC from "./AnswerTypes/AnswerABC";
@@ -11,19 +10,57 @@ import SurveyFormSuccess from "../SurveyForm/SurveyFormSuccess";
 import SurveyFillLogin from "./SurveyFillLogin/SurveyFillLogin";
 import SurveyFull from "./SurveyFull";
 import ErrorMessage from "../../ErrorMessage";
+import {useStore} from "../../../hooks-store/store";
+import {
+    ADD_REPLY, FETCH_SURVEY, LOADING_START, SURVEY_FAILED
+} from "../../../hooks-store/types";
+import axios from "axios";
 
 const SurveyFill = props => {
+    const state = useStore()[0];
+    const dispatch = useStore()[1];
+
+    const addReply = async (surveyURL, answers, surveyToken) => {
+            dispatch(LOADING_START);
+            try {
+                let headers;
+                if (surveyToken) {
+                    headers = {
+                        token: surveyToken
+                    }
+                }
+                const res = await axios.post('/api/surveys/reply/' + surveyURL, answers, {headers: headers});
+                dispatch(ADD_REPLY, res);
+            } catch (error) {
+                dispatch(SURVEY_FAILED, error.message);
+            }
+        };
 
     useEffect(() => {
-        props.fetchSurvey(props.match.params.surveyId, props.surveyToken);
-    }, [props.surveyToken]);
+        const fetchSurvey = async (id, surveyToken) => {
+            dispatch(LOADING_START);
+            try {
+                let headers;
+                if (surveyToken) {
+                    headers = {
+                        token: surveyToken
+                    }
+                }
+                const res = await axios.get('/api/surveys/' + id, {headers: headers});
+                dispatch(FETCH_SURVEY, res.data);
+            } catch (error) {
+                dispatch(SURVEY_FAILED, error.response.status);
+            }
+        };
+        fetchSurvey(props.match.params.surveyId, state.surveyToken);
+    }, [state.surveyToken]);
 
     const renderAnswers = () => {
         return (
             <div className="flex">
                 <div className="col s12 survey-form">
                     {
-                        props.survey.questions.map(({id, question, answers}, index) => {
+                        state.survey.questions.map(({id, question, answers}, index) => {
 
                             switch (id) {
                                 case 0:
@@ -58,24 +95,23 @@ const SurveyFill = props => {
     };
 
     let content;
-    if (props.error === 401 || props.error === 400) {
+    if (state.error === 401 || state.error === 400) {
         content = <SurveyFillLogin surveyId={props.match.params.surveyId}/>
-    } else if (props.error === 409) {
+    } else if (state.error === 409) {
         content = <SurveyFull/>
-    } else if (props.error === 404) {
+    } else if (state.error === 404) {
         content = <ErrorMessage/>
-    } else if (props.loading || !props.survey.questions) {
+    } else if (state.loading || !state.survey?.questions) {
         content = <Spinner/>
-    } else if (!props.surveyRepliedSuccess) {
+    } else if (!state.surveyRepliedSuccess) {
         content = <div className="bg bg-secondary">
             <div className="container">
                 <div className="survey row">
                     <div className="col m8 s12">
-                        <form onSubmit={props.handleSubmit((values) =>
-                            props.addReply(props.match.params.surveyId, values, props.surveyToken))}>
-                            <h5>Title: {props.survey.title}</h5>
-                            <h6>Subject: {props.survey.subject}</h6>
-                            <h6>Body: {props.survey.body}</h6>
+                        <form onSubmit={props.handleSubmit((values) => addReply(props.match.params.surveyId, values, state.surveyToken))}>
+                            <h5>Title: {state.survey.title}</h5>
+                            <h6>Subject: {state.survey.subject}</h6>
+                            <h6>Body: {state.survey.body}</h6>
                             {renderAnswers()}
                             <div className="flex flex-justify-between buttons">
                                 <button type="submit" className="btn large indigo darken-4">Submit
@@ -95,24 +131,12 @@ const SurveyFill = props => {
             {content}
         </div>
     );
-}
-
-function mapStateToProps({survey}) {
-    return {
-        surveyToken: survey.surveyToken,
-        loading: survey.loading,
-        error: survey.error,
-        surveyRepliedSuccess: survey.surveyRepliedSuccess,
-        survey: {
-            ...survey.survey
-        },
-    };
-}
+};
 
 export default reduxForm({
     form: 'surveyFill',
-})(connect(mapStateToProps, actions)(connect(state => ({
+})(connect(state => ({
     values: getFormValues('surveyFill')(state),
-}))(SurveyFill)));
+}))(SurveyFill));
 
 

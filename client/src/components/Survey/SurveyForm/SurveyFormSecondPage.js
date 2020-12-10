@@ -12,7 +12,6 @@ const INPUTS = [
 ];
 
 const SurveyFormSecondPage = props => {
-
     const renderFields = () => {
         return (
             <div>
@@ -25,7 +24,7 @@ const SurveyFormSecondPage = props => {
                 }
             </div>
         );
-    }
+    };
 
     return (
         <div className="bg bg-secondary">

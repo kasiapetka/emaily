@@ -1,8 +1,15 @@
-import React from "react";
-import { RiCheckboxCircleFill as Success} from "react-icons/ri"
+import React, {useState} from "react";
+import { RiCheckboxCircleFill as Success, RiFileCopyFill as Clipboard, RiCheckFill as Copied} from "react-icons/ri"
 import {Link} from "react-router-dom";
+const copy = require('copy-text-to-clipboard');
 
 export default (props) => {
+    const [copied, setCopied] = useState(false);
+    const onCopyLink=()=>{
+        copy(window.location.origin + "/surveys/" + props.URL);
+        setCopied(true);
+    };
+
     let content;
     if(props.URL){
         content = <React.Fragment>
@@ -42,12 +49,19 @@ export default (props) => {
                         {content}
                     </div>
 
-                    <Link to={"/"}
-                          className="inline">
-                        <button className='waves-effect waves-light btn-small indigo darken-4'>
-                            Return to home.
+                    <div className="flex flex-middle">
+                        <Link to={"/"}
+                              className="inline">
+                            <button className='waves-effect waves-light btn-small indigo darken-4'>
+                                Return to home.
+                            </button>
+                        </Link>
+                        <button className='waves-effect waves-light btn-small transparent black-text'
+                                onClick={onCopyLink}
+                                style={{marginLeft: '10px', fontSize: '1.8rem'}}>
+                            { copied ? <Copied/> : <Clipboard/>}
                         </button>
-                    </Link>
+                    </div>
                 </div>
             </div>
         </div>

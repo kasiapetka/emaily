@@ -1,7 +1,6 @@
 import React from 'react';
 import {Field, getFormValues, reduxForm} from "redux-form";
 import {connect} from "react-redux";
-import * as actions from "../../../store/actions";
 import {RiCheckFill} from "react-icons/ri";
 import validate from "./validate";
 
@@ -83,7 +82,7 @@ export default reduxForm({
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true,
     validate
-})(connect(null, actions)(connect(state => ({
+})(connect(state => ({
     values: getFormValues('surveyForm')(state),
-}))(SurveyFormLastPage)));
+}))(SurveyFormLastPage));
 
