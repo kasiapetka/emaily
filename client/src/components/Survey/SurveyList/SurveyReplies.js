@@ -1,31 +1,52 @@
-import React, {Component} from 'react';
-import {connect} from "react-redux";
-import * as actions from "../../../store/actions";
+import React, {useEffect} from 'react';
 import Spinner from "../../UI/Spinner/Spinner";
 import BarChart from "./SurveyCharts/BarChart";
 import DonutChart from "./SurveyCharts/DonutChart";
+import {useStore} from "../../../hooks-store/store";
+import {
+    FETCH_REPLIES, LOADING_START, SURVEY_FAILED
+} from "../../../hooks-store/types";
+import axios from "axios";
 
+const SurveyReplies = props => {
+    const state = useStore()[0];
+    const dispatch = useStore()[1];
 
-class SurveyReplies extends Component {
-    componentDidMount() {
-        this.props.fetchReplies(this.props.match.params.surveyId);
-    }
+    useEffect(() => {
+        const fetchReplies = async(id) => {
+            dispatch(LOADING_START);
+            try {
+                const res = await axios.get('/api/surveys/reply/' + id);
+                dispatch(FETCH_REPLIES, res.data);
+            } catch (error) {
+                dispatch(SURVEY_FAILED, error);
+            }
+        };
+        fetchReplies(props.match.params.surveyId);
+    }, []);
 
-    renderCharts = () => {
-        return this.props.replies.map((reply, index) => {
+    const renderCharts = () => {
+        return state.replies.map((reply, index) => {
             if (reply.id === 0) {
                 return <div className="row">
                     <div key={index} className="col l7 m8 s12" style={{marginTop: '15px'}}>
                         <div className="reply">
                             <h5 style={{marginBottom: '1.5rem'}}>{index + 1}. {reply.answers.question}</h5>
-                            <ul className="collection">{reply.answers.values.map((a,i) => a ? <li key={i}
-                                                                                              className="collection-item" >{a}</li> : null)}</ul>
+                            {
+                                reply.answers.values?.length !== 0
+                                ?
+                                    <ul className="collection">{reply.answers.values.map((a, i) => a ? <li key={i}
+                                                                                                           className="collection-item">{a}</li> : null)}</ul>
+                                    :
+                                    <p>No replies yet.</p>
+                            }
+
                         </div>
                     </div>
                 </div>
             } else {
                 return <div className="row" key={index}>
-                    <div  className="col l7 m8 s12">
+                    <div className="col l7 m8 s12">
                         <div className="reply">
                             <h5 style={{marginBottom: '1.5rem'}}>{index + 1}. {reply.answers.question}</h5>
                             <BarChart key={reply.id} answers={reply.answers.answers}/>
@@ -39,28 +60,17 @@ class SurveyReplies extends Component {
         })
     };
 
-    render() {
-        if (this.props.replies) {
-            return <div className="bg bg-secondary">
-                <div className="container">
-                    <div className="survey" style={{marginTop: '15px'}}>
-                        {this.renderCharts()}
-                    </div>
+    if (state.replies) {
+        return <div className="bg bg-secondary">
+            <div className="container">
+                <div className="survey" style={{marginTop: '15px'}}>
+                    {renderCharts()}
                 </div>
-            </div>;
-        } else return <Spinner/>;
-    }
-}
+            </div>
+        </div>;
+    } else return <Spinner/>;
+};
 
-function mapStateToProps({survey}) {
-    return {
-        replies: survey.replies,
-        loading: survey.loading,
-        error: survey.error,
-    };
-}
 
-export default connect(
-    mapStateToProps, actions
-)(SurveyReplies);
+export default SurveyReplies;
 

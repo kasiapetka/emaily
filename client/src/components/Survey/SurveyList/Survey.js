@@ -1,6 +1,11 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 import {RiCheckDoubleFill as Full} from 'react-icons/ri'
+import {useStore} from "../../../hooks-store/store";
+import {
+    DELETE_SURVEY, LOADING_START, SURVEY_FAILED
+} from "../../../hooks-store/types";
+import axios from "axios";
 
 const formatDate = (date) => {
     if (date) {
@@ -9,19 +14,36 @@ const formatDate = (date) => {
     } else return 'No response yet.';
 };
 
-const Subject = (props) => {
-    let title = <h5 style={{margin:'0'}}>Title: {props.title}</h5>;
-    if(props.limit === props.repliesCount){
-        title = <h5 style={{margin:'0'}} className="green-text text-darken-1">Title: {props.title} <Full/></h5>;
+const Survey = (props) => {
+    const dispatch = useStore()[1];
+    let title = <h5 style={{margin: '0'}}>Title: {props.title}</h5>;
+    if (props.limit === props.repliesCount) {
+        title = <h5 style={{margin: '0'}} className="green-text text-darken-1">Title: {props.title} <Full/></h5>;
     }
+
+    const deleteSurvey = async (id) => {
+            dispatch(LOADING_START);
+            try {
+                const res = await axios.delete('/api/surveys/' + id);
+                dispatch(DELETE_SURVEY, res.data);
+            } catch (error) {
+                dispatch(SURVEY_FAILED, error.response.status);
+            }
+        };
 
     return (
         <div className="survey-list">
             <div className="flex flex-justify-between">
                 {title}
-                <Link to={"/surveys/list/" + props.URL}>
-                    <button className="btn btn-small indigo darken-4">See more</button>
-                </Link>
+                <div className="flex">
+                    <Link to={"/surveys/list/" + props.URL}>
+                        <button className="btn btn-small indigo darken-4">See more</button>
+                    </Link>
+                    <button type="button" className="flex flex-middle btn btn-small red darken-4"
+                            style={{padding: '0 10px', marginLeft: '10px'}}
+                            onClick={() => deleteSurvey(props.URL)}>X
+                    </button>
+                </div>
             </div>
             <h6>Subject: {props.subject}</h6>
             <h6>Body: {props.body}</h6>
@@ -63,4 +85,5 @@ const Subject = (props) => {
     )
 };
 
-export default Subject;
+export default Survey;
+
