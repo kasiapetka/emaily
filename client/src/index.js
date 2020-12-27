@@ -24,6 +24,6 @@ configureStore();
 
 ReactDOM.render(
     <Provider store={store}>
-        <AuthProvider><App/> </AuthProvider>
+        <AuthProvider> <App/> </AuthProvider>
     </Provider>,
     document.querySelector('#root'));

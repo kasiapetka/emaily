@@ -11,7 +11,7 @@ export default (props) => {
     };
 
     let content;
-    if(props.URL){
+    if(props.URL){s
         content = <React.Fragment>
             <h5>Link to Your survey:</h5>
 

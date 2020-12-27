@@ -40,6 +40,6 @@ const App = () => {
         </Router>;
 
     return content;
-}
+};
 
 export default App;
